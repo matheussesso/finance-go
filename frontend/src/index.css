@@ -3,19 +3,29 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    /* Transição suave ao mudar o tema */
+    @apply transition-colors duration-300;
+  }
+  
   body {
-    @apply bg-[#0F0F13] text-gray-100 antialiased selection:bg-accent selection:text-white;
+    /* Light Mode por padrão */
+    @apply bg-[#F9FAFB] text-gray-800 antialiased selection:bg-accent selection:text-white transition-colors duration-300;
+  }
+  
+  html.dark body {
+    /* Dark Mode */
+    @apply bg-[#0A0A0B] text-gray-100;
   }
 }
 
-/* Scrollbar premium styling */
+/* Scrollbar clean styling */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #333;
-  border-radius: 20px;
+  @apply bg-gray-300 dark:bg-[#333] rounded-full;
 }

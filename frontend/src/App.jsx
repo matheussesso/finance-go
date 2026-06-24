@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthContext, AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
@@ -10,7 +11,7 @@ function PrivateRoute({ children }) {
   const { signed, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <div className="min-h-screen bg-[#0A0A0B] flex items-center justify-center text-white">Carregando...</div>;
+    return <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#0A0A0B] flex items-center justify-center text-gray-800 dark:text-white transition-colors duration-300">Carregando...</div>;
   }
 
   return signed ? children : <Navigate to="/login" />;
@@ -36,11 +37,13 @@ function RoutesApp() {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <RoutesApp />
-      </BrowserRouter>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <RoutesApp />
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
