@@ -5,14 +5,11 @@ import (
 	"errors"
 	"time"
 
+	"os"
+
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
-
-// JWTSecret é a chave secreta usada para assinar nossos tokens.
-// No PHP, costumamos colocar isso no .env e ler via env('JWT_SECRET').
-// Em um cenário real de Go, faríamos o mesmo usando bibliotecas como godotenv.
-var JWTSecret = []byte("seu_segredo_super_seguro_aqui")
 
 // UserService encapsula toda a regra de negócio relacionada aos usuários.
 // É o equivalente às classes "Services" ou "Actions" comuns no Laravel.
@@ -88,7 +85,12 @@ func (s *UserService) Login(email, password string) (string, *domain.User, error
 	})
 
 	// 4. Assina o token com nossa chave secreta
-	tokenString, err := token.SignedString(JWTSecret)
+	secret := os.Getenv("JWT_SECRET")
+	if secret == "" {
+		secret = "fallback_secret_local" // Para dev caso o .env não seja carregado
+	}
+
+	tokenString, err := token.SignedString([]byte(secret))
 	if err != nil {
 		return "", nil, errors.New("erro ao gerar token de autenticação")
 	}

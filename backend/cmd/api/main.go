@@ -14,6 +14,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	"github.com/joho/godotenv"
 )
 
 // func main() é o ponto central (entrypoint) de toda aplicação Go.
@@ -21,7 +22,11 @@ import (
 // a cada requisição, em Go a aplicação SOBE o próprio servidor e fica em memória 
 // rodando de forma contínua, atendendo múltiplas requisições assincronamente (Goroutines).
 func main() {
-	// DSN - Lê das Variáveis de Ambiente (Docker) ou usa Fallback para dev local
+	// Tenta carregar o arquivo .env (útil para rodar localmente sem Docker)
+	// Em ambiente Docker, as variáveis já são injetadas nativamente.
+	_ = godotenv.Load("../.env")
+
+	// DSN - Lê das Variáveis de Ambiente (Docker ou .env) ou usa Fallback para dev local
 	dsn := os.Getenv("DB_DSN")
 	if dsn == "" {
 		dsn = "apiuser:apipassword@tcp(localhost:3306)/personal_finance?charset=utf8mb4&parseTime=True&loc=Local"

@@ -5,13 +5,11 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/golang-jwt/jwt/v5"
 )
-
-// Constante para a chave do JWT Secret (na vida real usaríamos ENV)
-var JWTSecret = []byte("seu_segredo_super_seguro_aqui")
 
 // AuthMiddleware intercepta requisições para validar o Token JWT.
 // Equivalente ao `Route::middleware('auth:api')` no Laravel.
@@ -34,11 +32,15 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 		// 3. Valida a assinatura do Token
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			// Verifica se o método de assinatura é HMAC (o que usamos no login)
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("método de assinatura inesperado")
 			}
-			return JWTSecret, nil
+			
+			secret := os.Getenv("JWT_SECRET")
+			if secret == "" {
+				secret = "fallback_secret_local"
+			}
+			return []byte(secret), nil
 		})
 
 		if err != nil || !token.Valid {

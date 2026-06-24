@@ -2,11 +2,8 @@ services:
   mariadb:
     image: mariadb:10.11
     container_name: api-go-mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: personal_finance
-      MYSQL_USER: apiuser
-      MYSQL_PASSWORD: apipassword
+    env_file:
+      - .env
     ports:
       - "3306:3306"
     volumes:
@@ -25,9 +22,8 @@ services:
     container_name: api-go-backend
     ports:
       - "8080:8080"
-    environment:
-      # O Go vai se conectar usando o nome do serviço 'mariadb' (rede interna do Docker)
-      - DB_DSN=apiuser:apipassword@tcp(mariadb:3306)/personal_finance?charset=utf8mb4&parseTime=True&loc=Local
+    env_file:
+      - .env
     depends_on:
       mariadb:
         condition: service_healthy # Só sobe a API quando o banco estiver 100% pronto
