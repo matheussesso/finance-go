@@ -2,6 +2,7 @@ package main
 
 import (
 	"backend/internal/handler"
+	mymiddleware "backend/internal/middleware"
 	"backend/internal/repository"
 	"backend/internal/service"
 	"backend/pkg/response"
@@ -44,6 +45,14 @@ func main() {
 	userService := service.NewUserService(userRepo)
 	authHandler := handler.NewAuthHandler(userService)
 
+	blockRepo := repository.NewBlockRepository(db)
+	blockService := service.NewBlockService(blockRepo)
+	blockHandler := handler.NewBlockHandler(blockService)
+
+	itemRepo := repository.NewItemRepository(db)
+	itemService := service.NewItemService(itemRepo, blockRepo)
+	itemHandler := handler.NewItemHandler(itemService)
+
 	// Inicializamos o "Roteador" (equivalente ao routes/api.php do Laravel)
 	r := chi.NewRouter()
 
@@ -74,10 +83,25 @@ func main() {
 		response.JSON(w, http.StatusOK, map[string]string{"status": "API Go Online e Operacional"})
 	})
 
-	// Agrupamento de rotas com o prefixo /api/auth
+	// Agrupamento de rotas com o prefixo /api/auth (Públicas)
 	r.Route("/api/auth", func(r chi.Router) {
 		r.Post("/register", authHandler.Register)
 		r.Post("/login", authHandler.Login)
+	})
+
+	// Rotas Protegidas (Exigem JWT)
+	// Equivalente ao Route::middleware('auth:api')->group(...) no Laravel
+	r.Group(func(r chi.Router) {
+		r.Use(mymiddleware.AuthMiddleware)
+
+		// Blocos
+		r.Get("/api/blocks", blockHandler.List)
+		r.Post("/api/blocks", blockHandler.Create)
+		r.Delete("/api/blocks/{id}", blockHandler.Delete)
+
+		// Itens
+		r.Post("/api/items", itemHandler.Create)
+		r.Delete("/api/blocks/{block_id}/items/{id}", itemHandler.Delete)
 	})
 
 	log.Println("🚀 Servidor Go rodando na porta :8080")
