@@ -42,6 +42,9 @@ func main() {
 		log.Fatalf("Erro crítico ao inicializar o banco: %v", err)
 	}
 
+	// Popula o banco com dados iniciais se estiver vazio (Seeders)
+	repository.SeedDatabase(db)
+
 	// ---------------------------------------------------------
 	// SETUP DAS DEPENDÊNCIAS (Injeção de Dependência)
 	// No Laravel, o "Service Container" faz a injeção automaticamente via Reflection
