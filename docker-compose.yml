@@ -14,6 +14,26 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
     restart: unless-stopped
+    # O healthcheck avisa ao Docker quando o banco realmente terminou de ligar
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: api-go-backend
+    ports:
+      - "8080:8080"
+    environment:
+      # O Go vai se conectar usando o nome do serviço 'mariadb' (rede interna do Docker)
+      - DB_DSN=apiuser:apipassword@tcp(mariadb:3306)/personal_finance?charset=utf8mb4&parseTime=True&loc=Local
+    depends_on:
+      mariadb:
+        condition: service_healthy # Só sobe a API quando o banco estiver 100% pronto
+    restart: unless-stopped
 
 volumes:
   mariadb_data:

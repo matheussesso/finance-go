@@ -13,31 +13,22 @@ Um sistema moderno de controle de Finanças Pessoais construído com **Go (Golan
 
 ## Como Executar e Testar a Aplicação
 
-Para ver a aplicação funcionando por completo na sua máquina, você precisará de três terminais rodando simultaneamente (um para o banco de dados, um para a API e um para o Frontend).
+Para rodar a aplicação simulando um ambiente real de produção, nós unificamos o **Banco de Dados (MariaDB)** e a **API Backend (Go)** no Docker. Siga os passos abaixo:
 
-### Passo 1: Subir o Banco de Dados (MariaDB)
-Na raiz do projeto (onde está o arquivo `docker-compose.yml`), execute o comando para iniciar o banco em segundo plano:
+### Passo 1: Subir o Backend e Banco de Dados
+Na raiz do projeto, execute o comando mágico do Docker Compose:
 ```bash
-docker compose up -d
+docker compose up -d --build
 ```
-*(Certifique-se de que o Docker esteja aberto e rodando no seu computador).*
+*(Ele vai baixar o banco de dados e compilar a imagem minúscula e ultrarrápida do Go na hora. A API ficará disponível na porta 8080).*
 
-### Passo 2: Iniciar a API Backend (Go)
-Abra um novo terminal, entre na pasta do backend e inicie o servidor:
-```bash
-cd backend
-go run cmd/api/main.go
-```
-Você verá uma mensagem no console dizendo: `🚀 Servidor Go rodando na porta :8080`.
-Neste exato momento, o Go se conectará ao MariaDB e criará todas as tabelas (User, Block, Item) automaticamente (AutoMigrate).
-
-### Passo 3: Iniciar o Frontend (React)
-Abra um terceiro terminal, entre na pasta do frontend e inicie a interface:
+### Passo 2: Iniciar o Frontend (React)
+Abra o seu terminal (apenas 1 é necessário agora!), entre na pasta do frontend e inicie a interface localmente:
 ```bash
 cd frontend
 npm run dev
 ```
-O console mostrará uma URL (geralmente `http://localhost:5173`). 
+O console mostrará uma URL (geralmente `http://localhost:5173`). Abra no navegador.
 
 ---
 

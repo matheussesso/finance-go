@@ -8,6 +8,7 @@ import (
 	"backend/pkg/response"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -20,11 +21,13 @@ import (
 // a cada requisição, em Go a aplicação SOBE o próprio servidor e fica em memória 
 // rodando de forma contínua, atendendo múltiplas requisições assincronamente (Goroutines).
 func main() {
-	// DSN (Data Source Name) - Equivale ao arquivo .env e database.php do Laravel.
-	dsn := "apiuser:apipassword@tcp(localhost:3306)/personal_finance?charset=utf8mb4&parseTime=True&loc=Local"
+	// DSN - Lê das Variáveis de Ambiente (Docker) ou usa Fallback para dev local
+	dsn := os.Getenv("DB_DSN")
+	if dsn == "" {
+		dsn = "apiuser:apipassword@tcp(localhost:3306)/personal_finance?charset=utf8mb4&parseTime=True&loc=Local"
+	}
 	
-	// Aguardamos 2 segundos para dar tempo do container Docker do MariaDB subir
-	// e aceitar conexões quando executamos "docker compose up" e "go run" muito próximos.
+	// Aguardamos 2 segundos por precaução, mas o Docker Healthcheck já garante que o DB tá de pé
 	time.Sleep(2 * time.Second)
 
 	// Conectamos ao banco e criamos as tabelas automaticamente (AutoMigrate)
