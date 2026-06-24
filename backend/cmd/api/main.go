@@ -1,0 +1,90 @@
+package main
+
+import (
+	"backend/internal/handler"
+	"backend/internal/repository"
+	"backend/internal/service"
+	"backend/pkg/response"
+	"log"
+	"net/http"
+	"time"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
+)
+
+// func main() é o ponto central (entrypoint) de toda aplicação Go.
+// Diferente do PHP, onde o servidor web (Apache/Nginx) roda um script index.php
+// a cada requisição, em Go a aplicação SOBE o próprio servidor e fica em memória 
+// rodando de forma contínua, atendendo múltiplas requisições assincronamente (Goroutines).
+func main() {
+	// DSN (Data Source Name) - Equivale ao arquivo .env e database.php do Laravel.
+	dsn := "apiuser:apipassword@tcp(localhost:3306)/personal_finance?charset=utf8mb4&parseTime=True&loc=Local"
+	
+	// Aguardamos 2 segundos para dar tempo do container Docker do MariaDB subir
+	// e aceitar conexões quando executamos "docker compose up" e "go run" muito próximos.
+	time.Sleep(2 * time.Second)
+
+	// Conectamos ao banco e criamos as tabelas automaticamente (AutoMigrate)
+	db, err := repository.ConnectDB(dsn)
+	if err != nil {
+		// log.Fatalf encerra a aplicação inteira (equivalente a um "die()")
+		log.Fatalf("Erro crítico ao inicializar o banco: %v", err)
+	}
+
+	// ---------------------------------------------------------
+	// SETUP DAS DEPENDÊNCIAS (Injeção de Dependência)
+	// No Laravel, o "Service Container" faz a injeção automaticamente via Reflection
+	// (ex: public function __construct(UserRepository $repo)).
+	// Em Go, nós instanciamos e passamos as dependências explicitamente (Manual DI),
+	// o que deixa o fluxo extremamente claro, rápido e limpo.
+	// ---------------------------------------------------------
+	userRepo := repository.NewUserRepository(db)
+	userService := service.NewUserService(userRepo)
+	authHandler := handler.NewAuthHandler(userService)
+
+	// Inicializamos o "Roteador" (equivalente ao routes/api.php do Laravel)
+	r := chi.NewRouter()
+
+	// ---------------------------------------------------------
+	// MIDDLEWARES
+	// Interceptam as requisições antes de chegarem aos Handlers
+	// ---------------------------------------------------------
+	r.Use(middleware.Logger)    // Loga cada requisição HTTP no terminal
+	r.Use(middleware.Recoverer) // Evita que o servidor crashe se der Panic (fatal error)
+
+	// O CORS permite que nosso Frontend no React/Vite (porta 5173 ou 3000) 
+	// faça chamadas para a porta 8080 do Go sem ser bloqueado pelo navegador.
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:5173", "http://localhost:3000"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	}))
+
+	// ---------------------------------------------------------
+	// DEFINIÇÃO DE ROTAS (Endpoints)
+	// ---------------------------------------------------------
+	
+	// Rota básica para checar se a API está online (GET /api/health)
+	r.Get("/api/health", func(w http.ResponseWriter, r *http.Request) {
+		response.JSON(w, http.StatusOK, map[string]string{"status": "API Go Online e Operacional"})
+	})
+
+	// Agrupamento de rotas com o prefixo /api/auth
+	r.Route("/api/auth", func(r chi.Router) {
+		r.Post("/register", authHandler.Register)
+		r.Post("/login", authHandler.Login)
+	})
+
+	log.Println("🚀 Servidor Go rodando na porta :8080")
+	
+	// Sobe de fato o servidor HTTP ouvindo na porta 8080.
+	// Se houver algum erro fatal (porta já em uso), ele dá crash.
+	if err := http.ListenAndServe(":8080", r); err != nil {
+		log.Fatalf("Erro ao iniciar o servidor: %v", err)
+	}
+}
