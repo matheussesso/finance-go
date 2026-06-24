@@ -14,15 +14,16 @@ func NewBlockService(repo domain.BlockRepository) *BlockService {
 	return &BlockService{repo: repo}
 }
 
-func (s *BlockService) CreateBlock(userID uint, title, blockType string) (*domain.Block, error) {
+func (s *BlockService) CreateBlock(userID uint, planningID uint, title string, blockType string) (*domain.Block, error) {
 	if title == "" || blockType == "" {
 		return nil, errors.New("título e tipo são obrigatórios")
 	}
 
 	block := &domain.Block{
-		UserID: userID,
-		Title:  title,
-		Type:   blockType,
+		UserID:     userID,
+		PlanningID: planningID,
+		Title:      title,
+		Type:       blockType,
 	}
 
 	if err := s.repo.Create(block); err != nil {

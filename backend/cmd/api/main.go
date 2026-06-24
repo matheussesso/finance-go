@@ -1,6 +1,7 @@
 package main
 
 import (
+	"backend/internal/domain"
 	"backend/internal/handler"
 	mymiddleware "backend/internal/middleware"
 	"backend/internal/repository"
@@ -35,8 +36,9 @@ func main() {
 	// Aguardamos 2 segundos por precaução, mas o Docker Healthcheck já garante que o DB tá de pé
 	time.Sleep(2 * time.Second)
 
-	// Conectamos ao banco e criamos as tabelas automaticamente (AutoMigrate)
+	// Conectamos ao banco e	// Atualiza as tabelas no MariaDB
 	db, err := repository.ConnectDB(dsn)
+	err = db.AutoMigrate(&domain.User{}, &domain.Planning{}, &domain.Block{}, &domain.Item{})
 	if err != nil {
 		// log.Fatalf encerra a aplicação inteira (equivalente a um "die()")
 		log.Fatalf("Erro crítico ao inicializar o banco: %v", err)
@@ -63,6 +65,10 @@ func main() {
 	itemRepo := repository.NewItemRepository(db)
 	itemService := service.NewItemService(itemRepo, blockRepo)
 	itemHandler := handler.NewItemHandler(itemService)
+
+	planningRepo := repository.NewPlanningRepository(db)
+	planningService := service.NewPlanningService(planningRepo)
+	planningHandler := handler.NewPlanningHandler(planningService)
 
 	// Inicializamos o "Roteador" (equivalente ao routes/api.php do Laravel)
 	r := chi.NewRouter()
@@ -105,14 +111,20 @@ func main() {
 	r.Group(func(r chi.Router) {
 		r.Use(mymiddleware.AuthMiddleware)
 
-		// Blocos
+		// Planejamentos (Plannings)
+		r.Get("/api/plannings", planningHandler.GetAll)
+		r.Post("/api/plannings", planningHandler.Create)
+		r.Get("/api/plannings/{id}", planningHandler.GetByID)
+		r.Delete("/api/plannings/{id}", planningHandler.Delete)
+
+		// Blocos (Blocks)
 		r.Get("/api/blocks", blockHandler.List)
 		r.Post("/api/blocks", blockHandler.Create)
 		r.Delete("/api/blocks/{id}", blockHandler.Delete)
 
-		// Itens
+		// Itens (Items)
 		r.Post("/api/items", itemHandler.Create)
-		r.Delete("/api/blocks/{block_id}/items/{id}", itemHandler.Delete)
+		r.Delete("/api/blocks/{blockId}/items/{itemId}", itemHandler.Delete)
 	})
 
 	log.Println("🚀 Servidor Go rodando na porta :8080")

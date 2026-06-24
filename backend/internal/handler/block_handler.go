@@ -19,8 +19,9 @@ func NewBlockHandler(blockService *service.BlockService) *BlockHandler {
 }
 
 type CreateBlockRequest struct {
-	Title string `json:"title"`
-	Type  string `json:"type"`
+	PlanningID uint   `json:"planning_id"`
+	Title      string `json:"title"`
+	Type       string `json:"type"`
 }
 
 // Create cria um novo bloco associado ao usuário logado.
@@ -34,7 +35,12 @@ func (h *BlockHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	block, err := h.blockService.CreateBlock(userID, req.Title, req.Type)
+	if req.PlanningID == 0 {
+		response.Error(w, http.StatusBadRequest, "O campo planning_id é obrigatório")
+		return
+	}
+
+	block, err := h.blockService.CreateBlock(userID, req.PlanningID, req.Title, req.Type)
 	if err != nil {
 		response.Error(w, http.StatusBadRequest, err.Error())
 		return

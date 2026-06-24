@@ -6,12 +6,14 @@ import (
 
 // Block representa um grupo de finanças (ex: "Dívida / Credor", "Contas Mãe")
 type Block struct {
-	ID        uint      `json:"id" gorm:"primaryKey"`
-	UserID    uint      `json:"user_id" gorm:"not null"`
-	Title     string    `json:"title" gorm:"type:varchar(255);not null"`
-	Type      string    `json:"type" gorm:"type:varchar(50);not null"` // ex: despesa, receita, planejamento
-	CreatedAt time.Time `json:"created_at"`
-	Items     []Item    `json:"items,omitempty" gorm:"foreignKey:BlockID;constraint:OnDelete:CASCADE"`
+	ID         uint      `json:"id" gorm:"primaryKey"`
+	UserID     uint      `json:"user_id" gorm:"not null"`
+	PlanningID uint      `json:"planning_id" gorm:"not null"` // Vínculo com o Planejamento
+	Title      string    `json:"title" gorm:"type:varchar(255);not null"`
+	Type       string    `json:"type" gorm:"type:varchar(50);not null"` // ex: despesa, receita, planejamento
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+	Items      []Item    `json:"items,omitempty" gorm:"foreignKey:BlockID;constraint:OnDelete:CASCADE"`
 }
 
 // BlockRepository define os contratos para acesso ao BD de blocos

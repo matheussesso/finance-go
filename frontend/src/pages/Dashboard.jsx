@@ -1,25 +1,32 @@
-import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { api } from '../services/api';
-import { LogOut, Plus, Trash2, CheckCircle, Circle, Sun, Moon, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+import { LogOut, Plus, Trash2, CheckCircle, Circle, Sun, Moon, TrendingUp, TrendingDown, DollarSign, LayoutDashboard, Calendar } from 'lucide-react';
+import { PlanningSelector } from '../components/PlanningSelector';
+import { CalendarView } from '../components/CalendarView';
 
 export function Dashboard() {
   const { user, signOut } = useContext(AuthContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const [blocks, setBlocks] = useState([]);
   
+  const [plannings, setPlannings] = useState([]);
+  const [currentPlanning, setCurrentPlanning] = useState(null);
+  const [viewMode, setViewMode] = useState('board'); // 'board' ou 'calendar'
+
   const [newBlockTitle, setNewBlockTitle] = useState('');
   const [newBlockType, setNewBlockType] = useState('despesa');
 
+  // Atualiza os blocos sempre que o planejamento selecionado muda
   useEffect(() => {
-    loadBlocks();
-  }, []);
+    if (currentPlanning) {
+      loadPlanningDetails();
+    }
+  }, [currentPlanning?.id]);
 
-  async function loadBlocks() {
+  async function loadPlanningDetails() {
     try {
-      const response = await api.get('/blocks');
-      setBlocks(response.data.data);
+      const response = await api.get(`/plannings/${currentPlanning.id}`);
+      setCurrentPlanning(response.data.data);
     } catch (err) {
       console.error(err);
     }
@@ -27,25 +34,41 @@ export function Dashboard() {
 
   async function handleCreateBlock(e) {
     e.preventDefault();
-    if (!newBlockTitle) return;
+    if (!newBlockTitle || !currentPlanning) return;
 
-    await api.post('/blocks', { title: newBlockTitle, type: newBlockType });
+    await api.post('/blocks', { 
+      planning_id: currentPlanning.id,
+      title: newBlockTitle, 
+      type: newBlockType 
+    });
     setNewBlockTitle('');
-    loadBlocks();
+    loadPlanningDetails();
   }
 
   async function handleDeleteBlock(id) {
     if (confirm("Tem certeza que deseja excluir todo o bloco e seus itens?")) {
       await api.delete(`/blocks/${id}`);
-      loadBlocks();
+      loadPlanningDetails();
     }
   }
 
-  async function handleCreateItem(e, blockId) {
-    e.preventDefault();
-    const form = e.target;
-    const desc = form.description.value;
-    const amount = parseFloat(form.amount.value);
+  async function handleCreateItem(e, blockId, specificDate = null) {
+    e?.preventDefault();
+    
+    let desc, amount, dueDate;
+
+    if (e) {
+      const form = e.target;
+      desc = form.description.value;
+      amount = parseFloat(form.amount.value);
+      dueDate = form.due_date?.value;
+    } else {
+      desc = prompt("Descrição do item:");
+      amount = parseFloat(prompt("Valor:"));
+      if (specificDate) {
+        dueDate = new Date(currentPlanning.year, currentPlanning.month - 1, specificDate).toISOString();
+      }
+    }
 
     if (!desc || isNaN(amount)) return;
 
@@ -53,16 +76,29 @@ export function Dashboard() {
       block_id: blockId,
       description: desc,
       amount: amount,
-      is_paid: false
+      is_paid: false,
+      due_date: dueDate || null
     });
     
-    form.reset();
-    loadBlocks();
+    if (e) e.target.reset();
+    loadPlanningDetails();
   }
 
   async function handleDeleteItem(blockId, itemId) {
     await api.delete(`/blocks/${blockId}/items/${itemId}`);
-    loadBlocks();
+    loadPlanningDetails();
+  }
+
+  const handleCalendarCreateClick = (day) => {
+    // Escolher um bloco para vincular o item rápido do calendário
+    if (!currentPlanning.blocks || currentPlanning.blocks.length === 0) {
+      alert("Crie um bloco primeiro!");
+      return;
+    }
+    const blockId = prompt("Digite o ID do Bloco (Em um sistema real isso seria um modal com select):\n" + currentPlanning.blocks.map(b => `${b.id} - ${b.title}`).join('\n'));
+    if (blockId) {
+      handleCreateItem(null, parseInt(blockId), day);
+    }
   }
 
   const calculateTotal = (items) => {
@@ -76,14 +112,40 @@ export function Dashboard() {
       {/* Header Premium */}
       <header className="border-b border-gray-200 dark:border-white/5 bg-white/80 dark:bg-[#0F0F13]/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-accent/20">
-              <DollarSign className="text-white w-5 h-5" />
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-accent/20">
+                <DollarSign className="text-white w-5 h-5" />
+              </div>
+              <h1 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight hidden sm:block">FinanceGo</h1>
             </div>
-            <h1 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">FinanceGo</h1>
+
+            <div className="h-6 w-px bg-gray-200 dark:bg-gray-700 hidden sm:block"></div>
+
+            <PlanningSelector 
+              currentPlanning={currentPlanning}
+              setCurrentPlanning={setCurrentPlanning}
+              plannings={plannings}
+              setPlannings={setPlannings}
+            />
           </div>
           
           <div className="flex items-center gap-6">
+            <div className="flex bg-gray-100 dark:bg-white/5 p-1 rounded-xl">
+              <button 
+                onClick={() => setViewMode('board')}
+                className={`p-2 rounded-lg flex items-center gap-2 transition-colors ${viewMode === 'board' ? 'bg-white dark:bg-[#141416] text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'}`}
+              >
+                <LayoutDashboard size={18} /> <span className="hidden sm:block text-sm font-medium pr-1">Board</span>
+              </button>
+              <button 
+                onClick={() => setViewMode('calendar')}
+                className={`p-2 rounded-lg flex items-center gap-2 transition-colors ${viewMode === 'calendar' ? 'bg-white dark:bg-[#141416] text-gray-900 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'}`}
+              >
+                <Calendar size={18} /> <span className="hidden sm:block text-sm font-medium pr-1">Calendar</span>
+              </button>
+            </div>
+
             <button 
               onClick={toggleTheme}
               className="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10 transition-colors"
@@ -107,7 +169,11 @@ export function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-6 mt-10">
         
-        {/* Sessão de Criação Rápida */}
+        {viewMode === 'calendar' ? (
+          <CalendarView currentPlanning={currentPlanning} onCreateItemClick={handleCalendarCreateClick} />
+        ) : (
+          <>
+            {/* Sessão de Criação Rápida */}
         <section className="mb-12 bg-white dark:bg-secondary-dark/30 border border-gray-200 dark:border-white/5 p-6 rounded-3xl shadow-sm dark:shadow-none transition-colors duration-300">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
@@ -143,15 +209,15 @@ export function Dashboard() {
 
         {/* Grid de Blocos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blocks.length === 0 && (
+          {(!currentPlanning?.blocks || currentPlanning.blocks.length === 0) && (
             <div className="col-span-full flex flex-col items-center justify-center py-20 text-gray-400 dark:text-gray-500">
               <DollarSign size={48} className="mb-4 opacity-20" />
-              <p>Nenhum bloco financeiro criado ainda.</p>
+              <p>Nenhum bloco financeiro criado neste planejamento.</p>
               <p className="text-sm mt-1">Crie seu primeiro bloco acima para começar a organizar.</p>
             </div>
           )}
 
-          {blocks.map(block => (
+          {currentPlanning?.blocks?.map(block => (
             <div key={block.id} className="bg-white dark:bg-secondary-dark/20 border border-gray-200 dark:border-white/5 rounded-3xl overflow-hidden hover:border-accent/30 dark:hover:border-white/10 hover:shadow-md dark:hover:shadow-none transition-all flex flex-col group/card relative">
               
               {/* Header do Bloco */}
@@ -205,12 +271,17 @@ export function Dashboard() {
 
               {/* Formulario de Adicionar Item */}
               <div className="p-4 border-t border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-[#141416]/20">
-                <form onSubmit={(e) => handleCreateItem(e, block.id)} className="flex gap-2 relative">
-                  <input name="description" placeholder="Ex: Conta de Luz" className="flex-1 bg-white dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/5 rounded-xl px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none" required />
-                  <input name="amount" type="number" step="0.01" placeholder="R$ 0,00" className="w-24 bg-white dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/5 rounded-xl px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none" required />
-                  <button type="submit" className="bg-accent/10 hover:bg-accent text-accent hover:text-white rounded-xl px-3 py-2 transition-colors">
-                    <Plus size={18} />
-                  </button>
+                <form onSubmit={(e) => handleCreateItem(e, block.id)} className="flex flex-col gap-2 relative">
+                  <div className="flex gap-2">
+                    <input name="description" placeholder="Ex: Conta de Luz" className="flex-1 bg-white dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/5 rounded-xl px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none" required />
+                    <input name="amount" type="number" step="0.01" placeholder="R$ 0,00" className="w-24 bg-white dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/5 rounded-xl px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none" required />
+                  </div>
+                  <div className="flex gap-2">
+                    <input name="due_date" type="date" className="flex-1 bg-white dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/5 rounded-xl px-3 py-2 text-xs text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none" />
+                    <button type="submit" className="w-24 flex items-center justify-center bg-accent/10 hover:bg-accent text-accent hover:text-white rounded-xl transition-colors">
+                      <Plus size={18} />
+                    </button>
+                  </div>
                 </form>
               </div>
 
@@ -226,6 +297,8 @@ export function Dashboard() {
             </div>
           ))}
         </div>
+          </>
+        )}
       </main>
     </div>
   );

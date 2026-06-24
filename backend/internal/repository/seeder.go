@@ -31,15 +31,25 @@ func SeedDatabase(db *gorm.DB) {
 	}
 	db.Create(&user)
 
-	// 2. Criar Blocos
+	// 2. Criar Planejamento Base
+	now := time.Now()
+	planning := domain.Planning{
+		UserID: user.ID,
+		Title:  "Planejamento Atual",
+		Month:  int(now.Month()),
+		Year:   now.Year(),
+	}
+	db.Create(&planning)
+
+	// 3. Criar Blocos
 	blocks := []domain.Block{
-		{UserID: user.ID, Title: "Despesas de Casa", Type: "despesa"},
-		{UserID: user.ID, Title: "Receitas Mês", Type: "receita"},
+		{UserID: user.ID, PlanningID: planning.ID, Title: "Despesas de Casa", Type: "despesa"},
+		{UserID: user.ID, PlanningID: planning.ID, Title: "Receitas Mês", Type: "receita"},
 	}
 	db.Create(&blocks)
 
 	// 3. Criar Itens para os Blocos
-	now := time.Now()
+	now = time.Now()
 	items := []domain.Item{
 		// Itens do Bloco 1 (Casa)
 		{BlockID: blocks[0].ID, Description: "Conta de Luz", Amount: 150.00, IsPaid: true, DueDate: &now},
