@@ -1,5 +1,5 @@
 # Build stage
-FROM golang:1.21-alpine AS builder
+FROM golang:alpine AS builder
 WORKDIR /app
 
 # Instala dependências antes de copiar o código inteiro (cache layer)
