@@ -113,7 +113,7 @@ func GetLangFromContext(ctx context.Context) string {
 
 // Translate returns the translated string based on key and preferred language
 func Translate(lang string, key string) string {
-	// Pega os primeiros 2 caracteres (ex: "pt-BR" -> "pt")
+	// Takes the first 2 characters (e.g.: "pt-BR" -> "pt")
 	baseLang := "pt"
 	if len(lang) >= 2 {
 		baseLang = strings.ToLower(lang[:2])

@@ -9,31 +9,31 @@ import (
 	"gorm.io/gorm"
 )
 
-// ConnectDB estabelece conexão com o MariaDB e realiza as migrations automáticas.
-// Retorna um ponteiro para a instância do gorm.DB ou um erro caso a conexão falhe.
+// ConnectDB establishes a connection with MariaDB and performs automatic migrations.
+// Returns a pointer to the gorm.DB instance or an error if the connection fails.
 func ConnectDB(dsn string) (*gorm.DB, error) {
-	// A função gorm.Open tenta conectar ao banco. Se falhar, o 'err' será diferente de nil.
+	// The gorm.Open function tries to connect to the database. If it fails, 'err' will be different from nil.
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		// %w embute o erro original dentro do nosso novo erro (útil para debugs futuros)
-		return nil, fmt.Errorf("falha ao conectar ao banco de dados: %w", err)
+		// %w embeds the original error inside our new error (useful for future debugging)
+		return nil, fmt.Errorf("failed to connect to database: %w", err)
 	}
 
-	log.Println("Conexão com MariaDB estabelecida com sucesso!")
+	log.Println("Connection to MariaDB established successfully!")
 
-	// AutoMigrate funciona semelhante ao "php artisan migrate".
-	// Ele lê as structs do domínio em Go e recria/altera as tabelas 
-	// (CREATE TABLE, ADD COLUMN) automaticamente para refletir as structs.
+	// AutoMigrate works similarly to "php artisan migrate".
+	// It reads the Go domain structs and automatically recreates/alters 
+	// the tables (CREATE TABLE, ADD COLUMN) to reflect the structs.
 	err = db.AutoMigrate(
 		&domain.User{},
 		&domain.Block{},
 		&domain.Item{},
 	)
 	if err != nil {
-		return nil, fmt.Errorf("falha na migração do banco: %w", err)
+		return nil, fmt.Errorf("failed database migration: %w", err)
 	}
 
-	log.Println("Tabelas migradas com sucesso!")
+	log.Println("Tables migrated successfully!")
 
 	return db, nil
 }

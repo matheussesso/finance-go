@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 
-// Componente para proteger a rota do Dashboard
+// Component to protect the Dashboard route
 function PrivateRoute({ children }) {
   const { t } = useTranslation();
   const { signed, loading } = useContext(AuthContext);

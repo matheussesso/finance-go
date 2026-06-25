@@ -6,7 +6,7 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    // Busca preferência salva ou tenta pegar preferência do sistema
+    // Fetch saved preference or fallback to system preference
     const storedTheme = localStorage.getItem('@FinanceGo:theme');
     if (storedTheme) {
       setTheme(storedTheme);

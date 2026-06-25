@@ -19,7 +19,7 @@ func NewPlanningHandler(service *service.PlanningService) *PlanningHandler {
 	return &PlanningHandler{service: service}
 }
 
-// Structs para os payloads JSON (DTOs)
+// Structs for JSON payloads (DTOs)
 type CreatePlanningRequest struct {
 	Title string `json:"title"`
 	Month int    `json:"month"`

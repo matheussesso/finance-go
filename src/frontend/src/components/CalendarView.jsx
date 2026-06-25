@@ -15,11 +15,11 @@ export function CalendarView({ currentPlanning, onCreateItemClick }) {
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
 
-  // Gera array de dias
+  // Generate days array
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
   const blanks = Array.from({ length: firstDayOfMonth }, (_, i) => i);
 
-  // Mapeia itens por dia
+  // Map items by day
   const itemsByDay = {};
   if (currentPlanning && currentPlanning.blocks) {
     currentPlanning.blocks.forEach(block => {

@@ -6,7 +6,7 @@ export function LanguageSelector() {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
-    // Opcional: Atualizar o header base do axios instantaneamente (já é feito via interceptor, mas bom garantir na instância ativa)
+    // Optional: Update the base axios header instantly (already done via interceptor, but good to guarantee on the active instance)
     api.defaults.headers.common['Accept-Language'] = lng;
   };
 

@@ -25,9 +25,9 @@ type CreateBlockRequest struct {
 	Type       string `json:"type"`
 }
 
-// Create cria um novo bloco associado ao usuário logado.
+// Create creates a new block associated with the logged-in user.
 func (h *BlockHandler) Create(w http.ResponseWriter, r *http.Request) {
-	// Extrai o ID do usuário do Contexto (injetado pelo AuthMiddleware)
+	// Extracts the user ID from the Context (injected by AuthMiddleware)
 	userID := r.Context().Value("user_id").(uint)
 
 	var req CreateBlockRequest
@@ -50,7 +50,7 @@ func (h *BlockHandler) Create(w http.ResponseWriter, r *http.Request) {
 	response.JSON(w, http.StatusCreated, block)
 }
 
-// List retorna todos os blocos do usuário logado, junto com seus itens.
+// List returns all blocks of the logged-in user, along with their items.
 func (h *BlockHandler) List(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value("user_id").(uint)
 
@@ -63,11 +63,11 @@ func (h *BlockHandler) List(w http.ResponseWriter, r *http.Request) {
 	response.JSON(w, http.StatusOK, blocks)
 }
 
-// Delete exclui um bloco e seus itens.
+// Delete removes a block and its items.
 func (h *BlockHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value("user_id").(uint)
 	
-	// Pega o ID da URL (ex: /api/blocks/5)
+	// Gets the ID from the URL (e.g.: /api/blocks/5)
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {

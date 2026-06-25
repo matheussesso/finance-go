@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-// Instância do Axios pré-configurada para apontar para nossa API Go
+// Pre-configured Axios instance to point to our Go API
 export const api = axios.create({
   baseURL: 'http://localhost:8080/api',
 });
 
-// Interceptor para injetar o Token JWT em todas as requisições
+// Interceptor to inject the JWT Token into all requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('@FinanceGo:token');
   if (token) {

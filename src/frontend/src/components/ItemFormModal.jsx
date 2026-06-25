@@ -12,7 +12,7 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
   useEffect(() => {
     if (isOpen) {
       if (defaultDate) {
-        // Formatar para YYYY-MM-DD
+        // Format to YYYY-MM-DD
         const d = new Date(defaultDate);
         const yyyy = d.getFullYear();
         const mm = String(d.getMonth() + 1).padStart(2, '0');

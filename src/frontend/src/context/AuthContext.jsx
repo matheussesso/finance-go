@@ -8,7 +8,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Quando a página carrega, verifica se o usuário já tinha feito login (salvo no LocalStorage)
+    // When the page loads, check if the user was already logged in (saved in LocalStorage)
     const storedUser = localStorage.getItem('@FinanceGo:user');
     const storedToken = localStorage.getItem('@FinanceGo:token');
 

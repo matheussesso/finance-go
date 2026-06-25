@@ -10,7 +10,7 @@ type planningRepository struct {
 	db *gorm.DB
 }
 
-// NewPlanningRepository cria a instância do repositório injetando o banco.
+// NewPlanningRepository creates the repository instance by injecting the database.
 func NewPlanningRepository(db *gorm.DB) domain.PlanningRepository {
 	return &planningRepository{db: db}
 }
@@ -21,7 +21,7 @@ func (r *planningRepository) Create(planning *domain.Planning) error {
 
 func (r *planningRepository) GetByID(id uint, userID uint) (*domain.Planning, error) {
 	var planning domain.Planning
-	// Preload traz os blocos e os itens associados em uma tacada só (Eager Loading)
+	// Preload fetches the blocks and associated items in a single query (Eager Loading)
 	err := r.db.Preload("Blocks.Items").Where("id = ? AND user_id = ?", id, userID).First(&planning).Error
 	if err != nil {
 		return nil, err

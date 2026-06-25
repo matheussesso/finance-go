@@ -7,56 +7,56 @@ import (
 	"gorm.io/gorm"
 )
 
-// userRepository é uma struct privada (inicia com letra minúscula).
-// Em Go, isso é parecido com uma classe "private" no PHP. Ela esconde a
-// conexão com o banco de dados (gorm.DB) do resto do sistema.
+// userRepository is a private struct (starts with lowercase letter).
+// In Go, this is similar to a "private" class in PHP. It hides the
+// database connection (gorm.DB) from the rest of the system.
 type userRepository struct {
 	db *gorm.DB
 }
 
-// NewUserRepository atua como um "Constructor" no PHP. 
-// Ele recebe a conexão do banco de dados e retorna a interface `domain.UserRepository`.
-// Retornar a interface garante o desacoplamento: o Service não sabe se estamos usando
-// GORM, MySQL ou um array em memória, ele só sabe que existem os métodos Create, FindByEmail, etc.
+// NewUserRepository acts like a "Constructor" in PHP. 
+// It receives the database connection and returns the `domain.UserRepository` interface.
+// Returning the interface ensures decoupling: the Service doesn't know if we are using
+// GORM, MySQL or an in-memory array, it only knows that methods like Create, FindByEmail exist.
 func NewUserRepository(db *gorm.DB) domain.UserRepository {
-	// Retornamos um ponteiro (&) para a struct instanciada.
+	// We return a pointer (&) to the instantiated struct.
 	return &userRepository{db}
 }
 
-// Create insere um novo usuário no banco de dados.
-// O parâmetro `user *domain.User` é um ponteiro (semelhante à passagem por referência no PHP).
-// Qualquer alteração que o GORM fizer no `user` (como preencher o ID gerado pelo auto-increment),
-// refletirá no objeto original lá no Service.
+// Create inserts a new user into the database.
+// The parameter `user *domain.User` is a pointer (similar to pass-by-reference in PHP).
+// Any changes GORM makes to `user` (like filling the auto-increment ID)
+// will reflect on the original object back in the Service.
 func (r *userRepository) Create(user *domain.User) error {
-	// r.db.Create recebe o ponteiro do usuário e gera o INSERT INTO users ...
+	// r.db.Create receives the user pointer and generates the INSERT INTO users ...
 	return r.db.Create(user).Error
 }
 
-// FindByEmail busca um usuário pelo endereço de e-mail.
-// Retorna um ponteiro para o usuário (*domain.User) e um erro (error).
-// Diferente do PHP onde lançaríamos uma Exception (throw new Exception), 
-// no Go nós retornamos o erro como um valor secundário.
+// FindByEmail searches for a user by email address.
+// Returns a pointer to the user (*domain.User) and an error (error).
+// Unlike PHP where we would throw an Exception (throw new Exception), 
+// in Go we return the error as a secondary value.
 func (r *userRepository) FindByEmail(email string) (*domain.User, error) {
 	var user domain.User
 	
-	// Executa a query: SELECT * FROM users WHERE email = ? LIMIT 1
+	// Executes the query: SELECT * FROM users WHERE email = ? LIMIT 1
 	err := r.db.Where("email = ?", email).First(&user).Error
 	
 	if err != nil {
-		// Se o erro for "RecordNotFound" (não encontrou o e-mail), não consideramos uma falha fatal,
-		// apenas retornamos nil (null) para o usuário, significando que ele não existe.
+		// If the error is "RecordNotFound" (didn't find the email), we don't consider it a fatal failure,
+		// we just return nil (null) for the user, meaning they don't exist.
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
-		// Se for um erro real (banco caiu, etc), retornamos o erro.
+		// If it's a real error (db down, etc), we return the error.
 		return nil, err
 	}
 	
-	// Retorna o endereço da memória (&user) contendo os dados carregados do banco.
+	// Returns the memory address (&user) containing the data loaded from the database.
 	return &user, nil
 }
 
-// FindByID busca um usuário pela sua Primary Key.
+// FindByID searches for a user by their Primary Key.
 func (r *userRepository) FindByID(id uint) (*domain.User, error) {
 	var user domain.User
 	err := r.db.First(&user, id).Error

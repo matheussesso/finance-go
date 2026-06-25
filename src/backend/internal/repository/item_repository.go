@@ -13,17 +13,17 @@ func NewItemRepository(db *gorm.DB) domain.ItemRepository {
 	return &itemRepository{db}
 }
 
-// Create salva um novo item.
+// Create saves a new item.
 func (r *itemRepository) Create(item *domain.Item) error {
 	return r.db.Create(item).Error
 }
 
-// Update salva alterações de um item existente.
+// Update saves changes to an existing item.
 func (r *itemRepository) Update(item *domain.Item) error {
 	return r.db.Save(item).Error
 }
 
-// Delete exclui um item específico.
+// Delete removes a specific item.
 func (r *itemRepository) Delete(id uint) error {
 	return r.db.Delete(&domain.Item{}, id).Error
 }

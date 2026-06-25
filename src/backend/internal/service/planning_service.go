@@ -51,7 +51,7 @@ func (s *PlanningService) GetAllPlannings(userID uint) ([]domain.Planning, error
 		return nil, errors.New("planning_fetch_error")
 	}
 
-	// Se não tiver planejamentos, podemos criar o do mês atual automaticamente?
+	// If there are no plannings, can we automatically create one for the current month?
 	if len(plannings) == 0 {
 		now := time.Now()
 		defaultPlanning, err := s.CreatePlanning(userID, "Planejamento Atual", int(now.Month()), now.Year())

@@ -50,7 +50,7 @@ func (h *ItemHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value("user_id").(uint)
 	
 	itemID, _ := strconv.ParseUint(chi.URLParam(r, "id"), 10, 32)
-	blockID, _ := strconv.ParseUint(chi.URLParam(r, "block_id"), 10, 32) // assumindo rotas aninhadas ou params query
+	blockID, _ := strconv.ParseUint(chi.URLParam(r, "block_id"), 10, 32) // assuming nested routes or query params
 
 	if err := h.itemService.DeleteItem(userID, uint(itemID), uint(blockID)); err != nil {
 		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), err.Error()))

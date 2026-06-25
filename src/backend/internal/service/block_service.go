@@ -5,7 +5,7 @@ import (
 	"errors"
 )
 
-// BlockService gerencia as regras de negócio dos Blocos de Finanças.
+// BlockService manages the business logic for Finance Blocks.
 type BlockService struct {
 	repo domain.BlockRepository
 }
@@ -38,7 +38,7 @@ func (s *BlockService) GetUserBlocks(userID uint) ([]domain.Block, error) {
 }
 
 func (s *BlockService) DeleteBlock(id uint, userID uint) error {
-	// 1. Verifica se o bloco existe e pertence a este usuário
+	// 1. Verify if the block exists and belongs to this user
 	block, err := s.repo.FindByID(id, userID)
 	if err != nil {
 		return err
@@ -47,6 +47,6 @@ func (s *BlockService) DeleteBlock(id uint, userID uint) error {
 		return errors.New("block_not_found")
 	}
 
-	// 2. Apaga o bloco
+	// 2. Delete the block
 	return s.repo.Delete(id, userID)
 }

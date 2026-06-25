@@ -23,7 +23,7 @@ export function Dashboard() {
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
   const [itemModalConfig, setItemModalConfig] = useState({ defaultDate: null, defaultBlockId: null });
 
-  // Atualiza os blocos sempre que o planejamento selecionado muda
+  // Update blocks whenever the selected planning changes
   useEffect(() => {
     if (currentPlanning) {
       loadPlanningDetails();
@@ -78,7 +78,7 @@ export function Dashboard() {
 
   const handleCalendarCreateClick = (day) => {
     if (!currentPlanning?.blocks || currentPlanning.blocks.length === 0) {
-      alert("Crie um bloco primeiro!");
+      alert("Create a block first!");
       return;
     }
     setItemModalConfig({
@@ -104,7 +104,7 @@ export function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0A0A0B] pb-20 transition-colors duration-300 font-sans">
       
-      {/* Header Premium */}
+      {/* Premium Header */}
       <header className="border-b border-gray-200 dark:border-white/5 bg-white/80 dark:bg-[#0F0F13]/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-6">
@@ -151,10 +151,10 @@ export function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-6 mt-8">
         
-        {/* Layout Dashboard (Calendário na Direita, Blocos na Esquerda) */}
+        {/* Dashboard Layout (Calendar on Right, Blocks on Left) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
-          {/* Main Content: Blocos (col-span-8) */}
+          {/* Main Content: Blocks (col-span-8) */}
           <div className="lg:col-span-8 flex flex-col gap-6">
             
             <div className="flex items-center justify-between bg-white dark:bg-secondary-dark/30 border border-gray-200 dark:border-white/5 p-4 rounded-md shadow-sm">
@@ -174,7 +174,7 @@ export function Dashboard() {
               </button>
             </div>
 
-            {/* Grid de Blocos Interno */}
+            {/* Internal Blocks Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {(!currentPlanning?.blocks || currentPlanning.blocks.length === 0) && (
                 <div className="col-span-full flex flex-col items-center justify-center py-16 text-gray-400 dark:text-gray-500 bg-white dark:bg-secondary-dark/20 rounded-md border border-gray-200 dark:border-white/5 border-dashed">
@@ -187,7 +187,7 @@ export function Dashboard() {
               {currentPlanning?.blocks?.map(block => (
                 <div key={block.id} className="bg-white dark:bg-[#141416] border border-gray-200 dark:border-white/5 rounded-md overflow-hidden hover:border-accent/30 dark:hover:border-white/10 shadow-sm transition-all flex flex-col group/card relative">
                   
-                  {/* Header do Bloco */}
+                  {/* Block Header */}
                   <div className="p-4 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5 flex justify-between items-center group">
                     <div className="flex items-center gap-3">
                       <div className={`p-1.5 rounded-md ${block.type === 'receita' ? 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-rose-100 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400'}`}>
@@ -205,7 +205,7 @@ export function Dashboard() {
                     </button>
                   </div>
 
-                  {/* Lista de Itens */}
+                  {/* Items List */}
                   <div className="p-4 flex-1 flex flex-col gap-2 max-h-[250px] overflow-y-auto">
                     {(!block.items || block.items.length === 0) ? (
                       <p className="text-gray-400 dark:text-gray-600 text-xs text-center py-4"></p>
@@ -234,7 +234,7 @@ export function Dashboard() {
                     )}
                   </div>
 
-                  {/* Botão de Adicionar Rápido */}
+                  {/* Quick Add Button */}
                   <div className="px-4 pb-3 pt-1 bg-white dark:bg-[#141416]">
                     <button 
                       onClick={() => handleOpenItemModalForBlock(block.id)}
@@ -244,7 +244,7 @@ export function Dashboard() {
                     </button>
                   </div>
 
-                  {/* Rodapé Total */}
+                  {/* Total Footer */}
                   <div className={`p-4 border-t border-gray-100 dark:border-white/5 flex justify-between items-center ${block.type === 'receita' ? 'bg-emerald-50 dark:bg-emerald-500/5' : 'bg-rose-50 dark:bg-rose-500/5'}`}>
                     <span className={`text-xs font-bold uppercase tracking-wider ${block.type === 'receita' ? 'text-emerald-700 dark:text-emerald-500' : 'text-rose-700 dark:text-rose-500'}`}>
                       Total
@@ -259,11 +259,11 @@ export function Dashboard() {
 
           </div>
 
-          {/* Sidebar: Calendário (col-span-4) */}
+          {/* Sidebar: Calendar (col-span-4) */}
           <div className="lg:col-span-4 flex flex-col gap-6">
             <CalendarView currentPlanning={currentPlanning} onCreateItemClick={handleCalendarCreateClick} />
             
-            {/* Widget Resumo */}
+            {/* Summary Widget */}
             <div className="bg-white dark:bg-secondary-dark/30 border border-gray-200 dark:border-white/5 p-5 rounded-md shadow-sm">
               <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4">{t('dashboard.summary')}</h3>
               <div className="flex flex-col gap-3">
@@ -287,7 +287,7 @@ export function Dashboard() {
 
       </main>
 
-      {/* Modais */}
+      {/* Modals */}
       <BlockFormModal 
         isOpen={isBlockModalOpen} 
         onClose={() => setIsBlockModalOpen(false)} 
