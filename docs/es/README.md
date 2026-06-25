@@ -1,4 +1,4 @@
-<h1 align="center">FinanceGo 🚀</h1>
+<h1 align="center">FinanceGo</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go" />
@@ -12,7 +12,7 @@
 > El diferencial de este proyecto es su fuerte arquitectura basada en **Clean Architecture (Go)** aliada a una interfaz SPA de alto nivel construida con **React** y **TailwindCSS**.
 
 <p align="center">
-  <b>🌍 Idiomas:</b> 
+  <b> Idiomas:</b> 
   <a href="../pt/README.md">Português</a> | 
   <a href="../../README.md">English</a> | 
   <a href="README.md">Español</a>
@@ -20,7 +20,7 @@
 
 ---
 
-## 🎨 Screenshots
+## Screenshots
 *(Reemplaza estas imágenes por el enlace de las imágenes después de subir el repositorio en GitHub)*
 
 > `[ Inserta un screenshot del Dashboard aquí ]`
@@ -29,7 +29,7 @@
 
 ---
 
-## 🏗 Estructura del Proyecto
+## Estructura del Proyecto
 
 El stack está dividido rigurosamente entre Frontend y Backend, orquestado a través de Docker.
 
@@ -40,7 +40,7 @@ El stack está dividido rigurosamente entre Frontend y Backend, orquestado a tra
 
 ---
 
-## 🚀 Cómo Ejecutar y Probar la Aplicación
+## Cómo Ejecutar y Probar la Aplicación
 
 Para correr la aplicación simulando un entorno real de producción (Multi-stage builds), hemos unificado **todo el Stack** en Docker. Sigue los pasos a continuación:
 
@@ -54,13 +54,13 @@ docker compose up -d --build
 
 ### Acceder en el Navegador
 ¡Listo! Con un solo comando, todo está en línea. Abre la URL del Frontend en tu navegador:
-👉 **[http://localhost:5173](http://localhost:5173)**
+ **[http://localhost:5173](http://localhost:5173)**
 
 *(Nota: Internamente, el backend de la API se está ejecutando expuesto en el puerto `8080` y la base de datos MariaDB en el puerto `3306`.)*
 
 ---
 
-## ✨ Características Principales
+## Características Principales
 
 1. **Gestión de Múltiples Planes:** Crea y navega por diferentes planes basados en Mes/Año.
 2. **Dashboard Unificado e Interactivo:** El calendario y la lista de bloques (Ingresos/Gastos) conviven en la misma pantalla, mostrando el balance global automáticamente.
@@ -71,7 +71,7 @@ docker compose up -d --build
 
 ---
 
-## 📖 Documentación Adicional (Dev)
+## Documentación Adicional (Dev)
 
 Si eres desarrollador y deseas entender mejor la arquitectura o la base de datos, explora los archivos de la carpeta `/docs`:
 - [Guía Rápida: Go para Devs PHP (Laravel/Codeigniter)](go_for_php_developers.md)
@@ -82,7 +82,7 @@ Si eres desarrollador y deseas entender mejor la arquitectura o la base de datos
 
 ---
 
-## 🤝 Cómo Contribuir
+## Cómo Contribuir
 
 1. Haz un **Fork** del repositorio.
 2. Crea una rama para tu característica: `git checkout -b mi-caracteristica`.
@@ -92,5 +92,5 @@ Si eres desarrollador y deseas entender mejor la arquitectura o la base de datos
 
 ---
 
-## 📝 Licencia
+## Licencia
 Este proyecto se distribuye bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.

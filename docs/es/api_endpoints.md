@@ -22,13 +22,13 @@ La API sirve JSON puro y responde en el puerto estandarizado del Backend (ej: `8
 
 ---
 
-## 🔑 Endpoints de Autenticación (Públicos)
+## Endpoints de Autenticación (Públicos)
 - `POST /api/auth/register`: Crea un nuevo `User` (Body: `name`, `email`, `password`).
 - `POST /api/auth/login`: Autentica al usuario y devuelve el Token JWT (Body: `email`, `password`).
 
 ---
 
-## 🔐 Endpoints Financieros (Requieren Header: `Authorization: Bearer <TOKEN>`)
+## Endpoints Financieros (Requieren Header: `Authorization: Bearer <TOKEN>`)
 
 ### Planes (`/api/plannings`)
 - `GET /api/plannings`: Lista todos los planes creados por el usuario.

@@ -1,4 +1,4 @@
-<h1 align="center">FinanceGo 🚀</h1>
+<h1 align="center">FinanceGo</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go" />
@@ -12,7 +12,7 @@
 > The differential of this project is its strong architecture based on **Clean Architecture (Go)** combined with a high-level SPA interface built with **React** and **TailwindCSS**.
 
 <p align="center">
-  <b>🌍 Languages:</b> 
+  <b> Languages:</b> 
   <a href="docs/pt/README.md">Português</a> | 
   <a href="README.md">English</a> | 
   <a href="docs/es/README.md">Español</a>
@@ -20,7 +20,7 @@
 
 ---
 
-## 🎨 Screenshots
+## Screenshots
 *(Replace these images with the link to the images after uploading the repository to GitHub)*
 
 > `[ Insert a screenshot of the Dashboard here ]`
@@ -29,7 +29,7 @@
 
 ---
 
-## 🏗 Project Structure
+## Project Structure
 
 The stack is strictly divided between Frontend and Backend, orchestrated via Docker.
 
@@ -40,7 +40,7 @@ The stack is strictly divided between Frontend and Backend, orchestrated via Doc
 
 ---
 
-## 🚀 How to Run and Test the Application
+## How to Run and Test the Application
 
 To run the application simulating a real production environment (Multi-stage builds), we unified **the entire Stack** in Docker. Follow the steps below:
 
@@ -54,13 +54,13 @@ docker compose up -d --build
 
 ### Access in the Browser
 Done! With just one command, everything is up. Open the Frontend URL in your browser:
-👉 **[http://localhost:5173](http://localhost:5173)**
+ **[http://localhost:5173](http://localhost:5173)**
 
 *(Note: Internally, the API backend is running exposed on port `8080` and the MariaDB database on port `3306`.)*
 
 ---
 
-## ✨ Main Features
+## Main Features
 
 1. **Multiple Plannings Management:** Create and navigate through different plannings based on Month/Year.
 2. **Unified and Interactive Dashboard:** The calendar and the list of blocks (Revenues/Expenses) coexist on the same screen, displaying the global balance automatically.
@@ -71,7 +71,7 @@ Done! With just one command, everything is up. Open the Frontend URL in your bro
 
 ---
 
-## 📖 Additional Documentation (Dev)
+## Additional Documentation (Dev)
 
 If you are a developer and want to better understand the architecture or the database, explore the files in the `/docs` folder:
 - [Quick Guide: Go for PHP Devs (Laravel/Codeigniter)](docs/en/go_for_php_developers.md)
@@ -82,7 +82,7 @@ If you are a developer and want to better understand the architecture or the dat
 
 ---
 
-## 🤝 How to Contribute
+## How to Contribute
 
 1. **Fork** the repository.
 2. Create a branch for your feature: `git checkout -b my-feature`.
@@ -92,5 +92,5 @@ If you are a developer and want to better understand the architecture or the dat
 
 ---
 
-## 📝 License
+## License
 This project is distributed under the MIT license. See the `LICENSE` file for more details.

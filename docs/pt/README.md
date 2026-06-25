@@ -1,4 +1,4 @@
-<h1 align="center">FinanceGo 🚀</h1>
+<h1 align="center">FinanceGo </h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go" />
@@ -12,7 +12,7 @@
 > O diferencial deste projeto é sua forte arquitetura baseada em **Clean Architecture (Go)** aliada a uma interface SPA de alto nível construída com **React** e **TailwindCSS**.
 
 <p align="center">
-  <b>🌍 Idiomas:</b> 
+  <b> Idiomas:</b> 
   <a href="README.md">Português</a> | 
   <a href="../../README.md">English</a> | 
   <a href="../es/README.md">Español</a>
@@ -20,7 +20,7 @@
 
 ---
 
-## 🎨 Screenshots
+## Screenshots
 *(Substitua estas imagens pelo link das imagens após subir o repositório no GitHub)*
 
 > `[ Insira um screenshot do Dashboard aqui ]`
@@ -29,7 +29,7 @@
 
 ---
 
-## 🏗 Estrutura do Projeto
+## Estrutura do Projeto
 
 A stack é dividida rigorosamente entre Frontend e Backend, orquestrada via Docker.
 
@@ -40,7 +40,7 @@ A stack é dividida rigorosamente entre Frontend e Backend, orquestrada via Dock
 
 ---
 
-## 🚀 Como Executar e Testar a Aplicação
+## Como Executar e Testar a Aplicação
 
 Para rodar a aplicação simulando um ambiente real de produção (Multi-stage builds), nós unificamos **toda a Stack** no Docker. Siga os passos abaixo:
 
@@ -54,13 +54,13 @@ docker compose up -d --build
 
 ### Acessar no Navegador
 Pronto! Com apenas um comando, tudo está no ar. Abra no seu navegador a URL do Frontend:
-👉 **[http://localhost:5173](http://localhost:5173)**
+ **[http://localhost:5173](http://localhost:5173)**
 
 *(Nota: Internamente, o backend da API está rodando exposto na porta `8080` e o banco MariaDB na porta `3306`.)*
 
 ---
 
-## ✨ Features Principais
+## Features Principais
 
 1. **Gestão de Planejamentos Múltiplos:** Crie e navegue por planejamentos diferentes com base no Mês/Ano.
 2. **Dashboard Unificado e Interativo:** O calendário e a lista de blocos (Entradas/Saídas) convivem na mesma tela, exibindo o balanço global automaticamente.
@@ -71,7 +71,7 @@ Pronto! Com apenas um comando, tudo está no ar. Abra no seu navegador a URL do 
 
 ---
 
-## 📖 Documentação Adicional (Dev)
+## Documentação Adicional (Dev)
 
 Se você é desenvolvedor e deseja entender melhor a arquitetura ou o banco de dados, explore os arquivos da pasta `/docs`:
 - [Guia Rápido: Go para Devs PHP (Laravel/Codeigniter)](docs/pt/go_for_php_developers.md)
@@ -82,7 +82,7 @@ Se você é desenvolvedor e deseja entender melhor a arquitetura ou o banco de d
 
 ---
 
-## 🤝 Como Contribuir
+## Como Contribuir
 
 1. Faça o **Fork** do repositório.
 2. Crie uma branch para a sua feature: `git checkout -b minha-feature`.
@@ -92,5 +92,5 @@ Se você é desenvolvedor e deseja entender melhor a arquitetura ou o banco de d
 
 ---
 
-## 📝 Licença
+## Licença
 Este projeto é distribuído sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.

@@ -2,14 +2,14 @@
 
 A aplicação FinanceGo foi desenhada separando rigorosamente o Frontend (React) do Backend (API REST Go). Isso garante alta escalabilidade, testes independentes e um workflow de manutenção limpo. Tudo é orquestrado de maneira transparente utilizando **Docker**.
 
-## 🚀 Infraestrutura (Docker All-in-One)
+## Infraestrutura (Docker All-in-One)
 Todo o projeto é projetado para rodar em produção e desenvolvimento usando contêineres:
 
 1. **MariaDB (`mariadb`)**: Banco de dados relacional. Persiste os dados de maneira segura através de volumes do Docker.
 2. **Backend API (`api-go-backend`)**: Roda nossa imagem ultra-leve e compilada em Go nativo na porta 8080.
 3. **Frontend SPA (`api-go-frontend`)**: Interface encapsulada no **NGINX**, garantindo performance máxima para o carregamento estático.
 
-## ⚙️ Backend (Go API)
+## Backend (Go API)
 Utilizamos uma arquitetura inspirada em **Clean Architecture** e conceitos de Domain-Driven Design (DDD), adaptada para Go. Isso garante que a lógica de negócios não dependa de frameworks web ou bancos de dados específicos.
 
 **Estrutura de pacotes:**
@@ -21,7 +21,7 @@ Utilizamos uma arquitetura inspirada em **Clean Architecture** e conceitos de Do
 
 **Build Multi-stage do Backend:** O `Dockerfile` dele usa a imagem do Golang apenas para "compilar" o código. Depois copia o binário (`.exe` de linux) final para uma imagem `alpine` minúscula. O código fonte **nunca** vai para a produção, apenas a máquina já compilada!
 
-## 🎨 Frontend (React + Vite)
+## Frontend (React + Vite)
 - Interface reativa SPA (Single Page Application).
 - Comunicação direta via chamadas HTTP assíncronas (Axios/Fetch) para a API Go.
 - Estilização premium e utilitária focada em **Tailwind CSS**.

@@ -1,4 +1,4 @@
-# FinanceGo - Project Rules & Architecture for Antigravity
+# FinanceGo - Project Rules & Architecture
 
 This file defines the strict workspace rules, architecture standards, and best practices for this specific repository.
 
@@ -31,7 +31,7 @@ This file defines the strict workspace rules, architecture standards, and best p
 - **API Consumption:** `axios` configured centrally at `src/services/api.js` with Request Interceptors injecting JWT token and `Accept-Language` header from `localStorage`.
 - **i18n:** Multi-language support via `react-i18next`. All components must use the `useTranslation` hook instead of hardcoded text strings.
 
-## 4. Coding Standards (Caveman Mode Rules)
+## 4. Coding Standards
 - Keep responses short. Talk less, code more.
 - Always check `.env` existence logic (`godotenv.Load`) but default to `os.Getenv()`.
 - Add Go-doc comments mimicking PHP equivalents for educational purposes (e.g., `// Handler = Controller`, `// Pointer = Reference`).
