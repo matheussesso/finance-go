@@ -17,7 +17,7 @@ services:
 
   api:
     build:
-      context: .
+      context: ./src/backend
       dockerfile: Dockerfile
     container_name: api-go-backend
     ports:
@@ -27,6 +27,17 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy # Só sobe a API quando o banco estiver 100% pronto
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile
+    container_name: api-go-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
     restart: unless-stopped
 
 volumes:
