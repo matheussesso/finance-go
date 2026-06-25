@@ -51,12 +51,12 @@ export function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0A0A0B] p-4 transition-colors duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#22272e] p-4 transition-colors duration-300">
       
       {/* Top-Right Theme Button */}
       <button 
         onClick={toggleTheme}
-        className="absolute top-6 right-6 p-3 rounded-full bg-white dark:bg-[#141416] text-gray-600 dark:text-gray-300 shadow-sm border border-gray-200 dark:border-white/5 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"
+        className="absolute top-6 right-6 p-3 rounded-full bg-white dark:bg-[#2d333b] text-gray-600 dark:text-gray-300 shadow-sm border border-gray-200 dark:border-white/5 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"
       >
         {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
       </button>
@@ -97,7 +97,7 @@ export function Login() {
                   required
                   value={name}
                   onChange={e => setName(e.target.value)}
-                  className="w-full bg-gray-50 dark:bg-[#141416] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:bg-white transition-all"
+                  className="w-full bg-gray-50 dark:bg-[#2d333b] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:bg-white transition-all"
                   placeholder={t('login.name_placeholder')}
                 />
               </div>
@@ -110,7 +110,7 @@ export function Login() {
                 required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full bg-gray-50 dark:bg-[#141416] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:bg-white transition-all"
+                className="w-full bg-gray-50 dark:bg-[#2d333b] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:bg-white transition-all"
                 placeholder={t('login.email_placeholder')}
               />
             </div>
@@ -122,7 +122,7 @@ export function Login() {
                 required
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="w-full bg-gray-50 dark:bg-[#141416] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:bg-white transition-all"
+                className="w-full bg-gray-50 dark:bg-[#2d333b] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:bg-white transition-all"
                 placeholder="••••••••"
               />
             </div>

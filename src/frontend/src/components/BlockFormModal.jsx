@@ -47,7 +47,7 @@ export function BlockFormModal({ isOpen, onClose, onSubmit }) {
             onChange={e => setTitle(e.target.value)}
             required
             minLength={3}
-            className="w-full bg-gray-50 dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none transition-colors"
+            className="w-full bg-gray-50 dark:bg-[#22272e] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none transition-colors"
           />
         </div>
         <div>
@@ -56,7 +56,7 @@ export function BlockFormModal({ isOpen, onClose, onSubmit }) {
             value={type}
             onChange={e => setType(e.target.value)}
             required
-            className="w-full bg-gray-50 dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none cursor-pointer"
+            className="w-full bg-gray-50 dark:bg-[#22272e] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none cursor-pointer"
           >
             <option value="despesa">{t('modals.type_expense')}</option>
             <option value="receita">{t('modals.type_revenue')}</option>

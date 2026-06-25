@@ -77,7 +77,7 @@ export function PlanningSelector({ currentPlanning, setCurrentPlanning, planning
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-[#141416] border border-gray-200 dark:border-white/5 shadow-xl rounded-2xl overflow-hidden z-50">
+        <div className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-[#2d333b] border border-gray-200 dark:border-white/5 shadow-xl rounded-2xl overflow-hidden z-50">
           <div className="p-2 flex flex-col gap-1 max-h-60 overflow-y-auto">
             {plannings.map(plan => (
               <button

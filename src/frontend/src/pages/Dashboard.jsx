@@ -160,10 +160,10 @@ export function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0A0A0B] pb-20 transition-colors duration-300 font-sans">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#22272e] pb-20 transition-colors duration-300 font-sans">
       
       {/* Premium Header */}
-      <header className="border-b border-gray-200 dark:border-white/5 bg-white/80 dark:bg-[#0F0F13]/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-300">
+      <header className="border-b border-gray-200 dark:border-white/5 bg-white/80 dark:bg-[#22272e]/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3">
@@ -243,7 +243,7 @@ export function Dashboard() {
               )}
 
               {currentPlanning?.blocks?.map(block => (
-                <div key={block.id} className="bg-white dark:bg-[#141416] border border-gray-200 dark:border-white/5 rounded-md overflow-hidden hover:border-accent/30 dark:hover:border-white/10 shadow-sm transition-all flex flex-col group/card relative">
+                <div key={block.id} className="bg-white dark:bg-[#2d333b] border border-gray-200 dark:border-white/5 rounded-md overflow-hidden hover:border-accent/30 dark:hover:border-white/10 shadow-sm transition-all flex flex-col group/card relative">
                   
                   {/* Block Header */}
                   <div className="p-4 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5 flex justify-between items-center group">
@@ -293,7 +293,7 @@ export function Dashboard() {
                   </div>
 
                   {/* Quick Add Button */}
-                  <div className="px-4 pb-3 pt-1 bg-white dark:bg-[#141416]">
+                  <div className="px-4 pb-3 pt-1 bg-white dark:bg-[#2d333b]">
                     <button 
                       onClick={() => handleOpenItemModalForBlock(block.id)}
                       className="w-full py-2 flex items-center justify-center gap-2 text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-accent dark:hover:text-accent border border-dashed border-gray-200 dark:border-white/10 hover:border-accent/50 dark:hover:border-accent/50 rounded-md transition-colors"

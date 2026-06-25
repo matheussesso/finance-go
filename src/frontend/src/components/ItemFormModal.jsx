@@ -78,7 +78,7 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
               value={blockId}
               onChange={e => setBlockId(e.target.value)}
               required
-              className="w-full bg-gray-50 dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none cursor-pointer"
+              className="w-full bg-gray-50 dark:bg-[#22272e] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none cursor-pointer"
             >
               <option value="" disabled>{t('modals.select_block')}</option>
               {blocks.map(b => (
@@ -97,7 +97,7 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
             onChange={e => setDescription(e.target.value)}
             required
             minLength={2}
-            className="w-full bg-gray-50 dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none transition-colors"
+            className="w-full bg-gray-50 dark:bg-[#22272e] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none transition-colors"
           />
         </div>
 
@@ -112,7 +112,7 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
               value={amount}
               onChange={e => setAmount(e.target.value)}
               required
-              className="w-full bg-gray-50 dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none transition-colors"
+              className="w-full bg-gray-50 dark:bg-[#22272e] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none transition-colors"
             />
           </div>
           <div className="flex-1">
@@ -121,7 +121,7 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
               type="date" 
               value={dueDate}
               onChange={e => setDueDate(e.target.value)}
-              className="w-full bg-gray-50 dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none transition-colors"
+              className="w-full bg-gray-50 dark:bg-[#22272e] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none transition-colors"
             />
           </div>
         </div>

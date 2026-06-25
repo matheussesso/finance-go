@@ -15,7 +15,7 @@
   
   html.dark body {
     /* Dark Mode */
-    @apply bg-[#0A0A0B] text-gray-100;
+    @apply bg-[#22272e] text-gray-100;
   }
 }
 

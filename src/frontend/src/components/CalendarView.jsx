@@ -78,7 +78,7 @@ export function CalendarView({ currentPlanning, onCreateItemClick }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-7 text-center border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-[#141416]/50">
+      <div className="grid grid-cols-7 text-center border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-[#2d333b]/50">
         {[t('calendar.days.Sun'), t('calendar.days.Mon'), t('calendar.days.Tue'), t('calendar.days.Wed'), t('calendar.days.Thu'), t('calendar.days.Fri'), t('calendar.days.Sat')].map(d => (
           <div key={d} className="py-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">{d}</div>
         ))}

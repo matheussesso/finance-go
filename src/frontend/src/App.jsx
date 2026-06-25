@@ -27,7 +27,7 @@ function PrivateRoute({ children }) {
   const { signed, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#0A0A0B] flex items-center justify-center text-gray-800 dark:text-white transition-colors duration-300">{t('dashboard.loading')}</div>;
+    return <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#22272e] flex items-center justify-center text-gray-800 dark:text-white transition-colors duration-300">{t('dashboard.loading')}</div>;
   }
 
   return signed ? children : <Navigate to="/login" />;

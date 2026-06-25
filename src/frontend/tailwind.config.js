@@ -10,11 +10,11 @@ export default {
       colors: {
         primary: {
           light: "#FFFFFF",
-          dark: "#0F0F13"
+          dark: "#22272e"
         },
         secondary: {
           light: "#F3F4F6", // gray-100
-          dark: "#141416"
+          dark: "#2d333b"
         },
         accent: {
           DEFAULT: "#4F46E5", // Indigo-600
