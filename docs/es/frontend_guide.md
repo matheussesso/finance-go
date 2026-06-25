@@ -12,6 +12,9 @@ Reemplazamos los formularios estáticos de la pantalla principal por **Modales**
 - Arquitectura de `Portal` en React o estado condicional, garantizando que las acciones de *Crear Bloque* o *Añadir Ítem* se superpongan en la pantalla con un fondo borroso (`backdrop-blur`).
 - Se implementaron componentes enfocados: `BlockFormModal` e `ItemFormModal`.
 
+## Documentación
+- **Estándares JSDoc:** Todos los archivos `.js` y `.jsx` deben incluir **comentarios JSDoc** completos en inglés. Estos comentarios explican qué hace cada componente o archivo, sus parámetros y tipos de retorno.
+
 ## Componentización Lógica
 Para mantener el diseño escalable, el proyecto usa:
 - `/src/components`: Componentes reutilizables enfocados e independientes como `Modal`, `BlockFormModal`, `ItemFormModal`, `CalendarView`.

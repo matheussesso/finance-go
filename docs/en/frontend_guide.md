@@ -12,6 +12,9 @@ We replaced static forms on the main screen with **Modals**:
 - `Portal` architecture in React or conditional state, ensuring that the *Create Block* or *Add Item* actions overlap the screen with a blurred background (`backdrop-blur`).
 - Focused components were implemented: `BlockFormModal` and `ItemFormModal`.
 
+## Documentation
+- **JSDoc Standards:** All `.js` and `.jsx` files must include comprehensive **JSDoc comments** in English. These comments explain what each component or file does, its parameters, and return types.
+
 ## Logical Componentization
 To keep the design scalable, the project uses:
 - `/src/components`: Focused and independent reusable components like `Modal`, `BlockFormModal`, `ItemFormModal`, `CalendarView`.

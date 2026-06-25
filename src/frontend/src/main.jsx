@@ -1,3 +1,9 @@
+/**
+ * @file main.jsx
+ * @description Entry point for the React application.
+ * Mounts the root App component into the DOM.
+ */
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'

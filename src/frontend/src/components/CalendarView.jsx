@@ -1,7 +1,21 @@
+/**
+ * @file CalendarView.jsx
+ * @description A graphical calendar component to visualize financial items grouped by day.
+ */
+
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * CalendarView Component.
+ * Parses the current planning blocks and maps their items onto a monthly calendar layout.
+ * 
+ * @param {Object} props - Component props
+ * @param {Object} props.currentPlanning - The currently active planning object containing blocks and items
+ * @param {function(number): void} props.onCreateItemClick - Callback triggered when clicking on a calendar day
+ * @returns {React.ReactElement} The rendered calendar widget
+ */
 export function CalendarView({ currentPlanning, onCreateItemClick }) {
   const { t, i18n } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -38,7 +52,14 @@ export function CalendarView({ currentPlanning, onCreateItemClick }) {
     });
   }
 
+  /**
+   * Navigates the calendar to the previous month.
+   */
   const prevMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+  
+  /**
+   * Navigates the calendar to the next month.
+   */
   const nextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
 
   return (

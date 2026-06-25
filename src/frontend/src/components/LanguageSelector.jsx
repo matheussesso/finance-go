@@ -1,9 +1,25 @@
+/**
+ * @file LanguageSelector.jsx
+ * @description Widget for switching the application's locale using i18next.
+ */
+
 import { useTranslation } from 'react-i18next';
 import { api } from '../services/api';
 
+/**
+ * LanguageSelector Component.
+ * Changes the active language state globally and updates API interceptor headers.
+ * 
+ * @returns {React.ReactElement} Rendered button group for language selection
+ */
 export function LanguageSelector() {
   const { i18n } = useTranslation();
 
+  /**
+   * Modifies the global language context.
+   * 
+   * @param {string} lng - Language code (e.g., 'en', 'pt', 'es')
+   */
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     // Optional: Update the base axios header instantly (already done via interceptor, but good to guarantee on the active instance)

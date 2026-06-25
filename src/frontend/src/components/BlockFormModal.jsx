@@ -1,12 +1,31 @@
+/**
+ * @file BlockFormModal.jsx
+ * @description Modal component used to create new financial blocks (income or expense).
+ */
+
 import { useState } from 'react';
 import { Modal } from './Modal';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * BlockFormModal Component.
+ * 
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether the modal is currently visible
+ * @param {function(): void} props.onClose - Callback triggered when closing the modal
+ * @param {function(Object): void} props.onSubmit - Callback triggered when the form is submitted
+ * @returns {React.ReactElement} The rendered modal component
+ */
 export function BlockFormModal({ isOpen, onClose, onSubmit }) {
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [type, setType] = useState('despesa');
 
+  /**
+   * Handles the form submission for a new block.
+   * 
+   * @param {React.FormEvent} e - The form submission event
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim()) return;

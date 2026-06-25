@@ -1,3 +1,9 @@
+/**
+ * @file Dashboard.jsx
+ * @description Main application dashboard page.
+ * Displays financial blocks, items, a calendar view, and summary widgets.
+ */
+
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
@@ -10,6 +16,12 @@ import { ItemFormModal } from '../components/ItemFormModal';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../components/LanguageSelector';
 
+/**
+ * Dashboard Component.
+ * Fetches and displays data related to the selected Planning (blocks, items).
+ * 
+ * @returns {React.ReactElement} The rendered Dashboard page
+ */
 export function Dashboard() {
   const { t } = useTranslation();
   const { user, signOut } = useContext(AuthContext);
@@ -30,6 +42,9 @@ export function Dashboard() {
     }
   }, [currentPlanning?.id]);
 
+  /**
+   * Fetches detailed information for the currently selected planning.
+   */
   async function loadPlanningDetails() {
     try {
       const response = await api.get(`/plannings/${currentPlanning.id}`);
@@ -39,6 +54,13 @@ export function Dashboard() {
     }
   }
 
+  /**
+   * Creates a new financial block.
+   * 
+   * @param {Object} data - Block data
+   * @param {string} data.title - Title of the block
+   * @param {string} data.type - Type of the block ('receita' or 'despesa')
+   */
   async function handleCreateBlock({ title, type }) {
     if (!currentPlanning) return;
 
@@ -51,6 +73,11 @@ export function Dashboard() {
     loadPlanningDetails();
   }
 
+  /**
+   * Deletes a financial block.
+   * 
+   * @param {number} id - The ID of the block to delete
+   */
   async function handleDeleteBlock(id) {
     if (window.confirm(t('block.delete_confirm'))) {
       await api.delete(`/blocks/${id}`);
@@ -58,6 +85,15 @@ export function Dashboard() {
     }
   }
 
+  /**
+   * Creates a new item within a block.
+   * 
+   * @param {Object} itemData - Item data
+   * @param {number} itemData.block_id - ID of the parent block
+   * @param {string} itemData.description - Description of the item
+   * @param {number} itemData.amount - Value of the item
+   * @param {string|null} itemData.due_date - ISO formatted date string
+   */
   async function handleCreateItem(itemData) {
     await api.post('/items', {
       block_id: itemData.block_id,
@@ -71,11 +107,22 @@ export function Dashboard() {
     loadPlanningDetails();
   }
 
+  /**
+   * Deletes an item from a block.
+   * 
+   * @param {number} blockId - ID of the parent block
+   * @param {number} itemId - ID of the item to delete
+   */
   async function handleDeleteItem(blockId, itemId) {
     await api.delete(`/blocks/${blockId}/items/${itemId}`);
     loadPlanningDetails();
   }
 
+  /**
+   * Handles clicking on a specific day in the calendar to add an item.
+   * 
+   * @param {number} day - The day of the month clicked
+   */
   const handleCalendarCreateClick = (day) => {
     if (!currentPlanning?.blocks || currentPlanning.blocks.length === 0) {
       alert("Create a block first!");
@@ -88,6 +135,11 @@ export function Dashboard() {
     setIsItemModalOpen(true);
   }
 
+  /**
+   * Opens the item modal pre-selected for a specific block.
+   * 
+   * @param {number} blockId - The ID of the block
+   */
   const handleOpenItemModalForBlock = (blockId) => {
     setItemModalConfig({
       defaultDate: null,
@@ -96,6 +148,12 @@ export function Dashboard() {
     setIsItemModalOpen(true);
   };
 
+  /**
+   * Calculates the total amount for an array of items.
+   * 
+   * @param {Array} items - List of items
+   * @returns {number} The calculated total
+   */
   const calculateTotal = (items) => {
     if (!items || items.length === 0) return 0;
     return items.reduce((acc, item) => acc + item.amount, 0);

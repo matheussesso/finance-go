@@ -1,6 +1,21 @@
+/**
+ * @file Modal.jsx
+ * @description Base Modal component offering standard backdrop blur, ESC key dismiss, and animations.
+ */
+
 import { X } from 'lucide-react';
 import { useEffect } from 'react';
 
+/**
+ * Reusable Base Modal Component.
+ * 
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether the modal is visible
+ * @param {function(): void} props.onClose - Callback triggered when closing the modal
+ * @param {string} props.title - Title displayed at the top of the modal
+ * @param {React.ReactNode} props.children - Modal body content
+ * @returns {React.ReactElement|null} The rendered Modal or null if closed
+ */
 export function Modal({ isOpen, onClose, title, children }) {
   useEffect(() => {
     const handleEscape = (e) => {

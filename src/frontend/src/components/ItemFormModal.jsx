@@ -1,7 +1,24 @@
+/**
+ * @file ItemFormModal.jsx
+ * @description Modal component used to create new transaction items within blocks.
+ */
+
 import { useState, useEffect } from 'react';
 import { Modal } from './Modal';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * ItemFormModal Component.
+ * 
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether the modal is visible
+ * @param {function(): void} props.onClose - Callback triggered when closing the modal
+ * @param {function(Object): void} props.onSubmit - Callback triggered when submitting the new item
+ * @param {string|null} props.defaultDate - Initial date string to pre-fill the form
+ * @param {number|null} props.defaultBlockId - Initial block ID to pre-fill the form
+ * @param {Array} props.blocks - Array of available blocks to select from
+ * @returns {React.ReactElement} The rendered modal component
+ */
 export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultBlockId, blocks = [] }) {
   const { t } = useTranslation();
   const [description, setDescription] = useState('');
@@ -33,6 +50,11 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
     }
   }, [isOpen, defaultDate, defaultBlockId, blocks]);
 
+  /**
+   * Handles the form submission for a new item.
+   * 
+   * @param {React.FormEvent} e - Form submission event
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!description.trim() || !amount || isNaN(parseFloat(amount)) || !blockId) return;

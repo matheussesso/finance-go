@@ -1,8 +1,23 @@
+/**
+ * @file PlanningSelector.jsx
+ * @description Dropdown component for switching between different Plannings or creating a new one.
+ */
+
 import { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { ChevronDown, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * PlanningSelector Component.
+ * 
+ * @param {Object} props - Component props
+ * @param {Object} props.currentPlanning - The currently selected planning object
+ * @param {function(Object): void} props.setCurrentPlanning - Setter for the active planning
+ * @param {Array} props.plannings - The list of all user plannings
+ * @param {function(Array): void} props.setPlannings - Setter for the plannings list
+ * @returns {React.ReactElement} The rendered selector widget
+ */
 export function PlanningSelector({ currentPlanning, setCurrentPlanning, plannings, setPlannings }) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +26,9 @@ export function PlanningSelector({ currentPlanning, setCurrentPlanning, planning
     loadPlannings();
   }, []);
 
+  /**
+   * Fetches all plannings for the current user from the API.
+   */
   async function loadPlannings() {
     try {
       const res = await api.get('/plannings');
@@ -23,6 +41,9 @@ export function PlanningSelector({ currentPlanning, setCurrentPlanning, planning
     }
   }
 
+  /**
+   * Prompts the user and creates a new planning based on current month/year.
+   */
   async function handleCreateNew() {
     const title = prompt(t('planning.prompt_name'));
     if (!title) return;

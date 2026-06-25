@@ -1,3 +1,9 @@
+/**
+ * @file Login.jsx
+ * @description Authentication page for the application.
+ * Handles both user login and user registration flows.
+ */
+
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
@@ -5,6 +11,13 @@ import { api } from '../services/api';
 import { WalletCards, Moon, Sun } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * Login Component.
+ * Presents a form for authentication or registration.
+ * Communicates with AuthContext to establish the user session.
+ * 
+ * @returns {React.ReactElement} The rendered Login page
+ */
 export function Login() {
   const { t } = useTranslation();
   const { signIn } = useContext(AuthContext);
@@ -16,6 +29,11 @@ export function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  /**
+   * Handles the form submission for both login and registration.
+   * 
+   * @param {React.FormEvent} e - The form submission event
+   */
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
@@ -35,7 +53,7 @@ export function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0A0A0B] p-4 transition-colors duration-300">
       
-      {/* Botão de Tema Top-Right */}
+      {/* Top-Right Theme Button */}
       <button 
         onClick={toggleTheme}
         className="absolute top-6 right-6 p-3 rounded-full bg-white dark:bg-[#141416] text-gray-600 dark:text-gray-300 shadow-sm border border-gray-200 dark:border-white/5 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"

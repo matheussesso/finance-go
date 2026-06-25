@@ -1,7 +1,25 @@
+/**
+ * @file ThemeContext.jsx
+ * @description Manages the application's light/dark theme state.
+ * Syncs the theme preference with localStorage and applies the corresponding CSS class to the HTML root.
+ */
+
 import { createContext, useState, useEffect } from 'react';
+
+/**
+ * @typedef {Object} ThemeContextData
+ * @property {string} theme - The current theme ('light' or 'dark')
+ * @property {function(): void} toggleTheme - Function to toggle between light and dark modes
+ */
 
 export const ThemeContext = createContext({});
 
+/**
+ * ThemeProvider component that wraps the app and provides the ThemeContext.
+ * 
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components to receive the context
+ */
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('light');
 
@@ -22,6 +40,9 @@ export function ThemeProvider({ children }) {
     localStorage.setItem('@FinanceGo:theme', theme);
   }, [theme]);
 
+  /**
+   * Toggles the current theme.
+   */
   function toggleTheme() {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   }

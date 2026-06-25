@@ -35,6 +35,7 @@ This file defines the strict workspace rules, architecture standards, and best p
 - Keep responses short. Talk less, code more.
 - Always check `.env` existence logic (`godotenv.Load`) but default to `os.Getenv()`.
 - Add Go-doc comments mimicking PHP equivalents for educational purposes (e.g., `// Handler = Controller`, `// Pointer = Reference`).
+- **Frontend Documentation:** Add comprehensive JSDoc comments to all frontend files (`.jsx` and `.js`) in English, detailing the components, parameters, and return types.
 - Prioritize: quality, security, performance, readability, scalability.
 - DRY and KISS principles apply strictly.
 
