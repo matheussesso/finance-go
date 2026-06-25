@@ -1,0 +1,71 @@
+{
+  "translation": {
+    "login": {
+      "title": "Accede a tu cuenta",
+      "subtitle": "Y recupera el control de tus finanzas.",
+      "email": "Correo electrónico",
+      "email_placeholder": "tu@email.com",
+      "password": "Contraseña",
+      "password_placeholder": "Tu contraseña secreta",
+      "button": "Entrar a FinanceGo",
+      "no_account": "¿Aún no tienes cuenta?",
+      "register": "Regístrate",
+      "register_title": "Crea tu cuenta",
+      "name": "Nombre completo",
+      "name_placeholder": "Juan Pérez",
+      "register_button": "Crear Cuenta",
+      "have_account": "¿Ya tienes cuenta?",
+      "login_link": "Iniciar sesión",
+      "loading": "Cargando..."
+    },
+    "dashboard": {
+      "welcome": "Bienvenido",
+      "balance": "Saldo Total",
+      "revenue": "Ingresos",
+      "expense": "Gastos",
+      "new_block": "Nuevo Bloque",
+      "logout": "Salir",
+      "empty_plannings": "No se encontraron planes. ¡Crea uno para empezar!",
+      "loading": "Cargando...",
+      "no_blocks": "No se han creado bloques aún.",
+      "summary": "Resumen del Mes"
+    },
+    "planning": {
+      "selector_title": "Mis Planes",
+      "create_new": "Nuevo Plan",
+      "prompt_name": "Nombre del nuevo plan (ej: Vacaciones 2026):",
+      "delete_confirm": "¿Estás seguro de que deseas eliminar el plan"
+    },
+    "block": {
+      "add_item": "Nuevo Ítem",
+      "delete_confirm": "¿Estás seguro de que deseas eliminar el bloque"
+    },
+    "calendar": {
+      "days": {
+        "Sun": "Dom", "Mon": "Lun", "Tue": "Mar", "Wed": "Mié", "Thu": "Jue", "Fri": "Vie", "Sat": "Sáb"
+      }
+    },
+    "modals": {
+      "new_block_title": "Nuevo Bloque Financiero",
+      "block_name": "Nombre del Bloque",
+      "block_name_placeholder": "Ej: Gastos de Casa, Salario...",
+      "block_type": "Tipo",
+      "type_expense": "Gasto (Rojo)",
+      "type_revenue": "Ingreso (Verde)",
+      "cancel": "Cancelar",
+      "create": "Crear",
+      "new_item_title": "Nuevo Ítem Financiero",
+      "target_block": "Bloque de Destino",
+      "select_block": "Seleccione un bloque",
+      "description": "Descripción",
+      "description_placeholder": "Ej: Factura de Luz, Supermercado...",
+      "amount": "Monto",
+      "due_date": "Vencimiento (Opcional)",
+      "add": "Añadir"
+    },
+    "errors": {
+      "generic": "Ocurrió un error.",
+      "api_error": "Error en la API"
+    }
+  }
+}

@@ -7,8 +7,11 @@ import { PlanningSelector } from '../components/PlanningSelector';
 import { CalendarView } from '../components/CalendarView';
 import { BlockFormModal } from '../components/BlockFormModal';
 import { ItemFormModal } from '../components/ItemFormModal';
+import { useTranslation } from 'react-i18next';
+import { LanguageSelector } from '../components/LanguageSelector';
 
 export function Dashboard() {
+  const { t } = useTranslation();
   const { user, signOut } = useContext(AuthContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
   
@@ -49,7 +52,7 @@ export function Dashboard() {
   }
 
   async function handleDeleteBlock(id) {
-    if (confirm("Tem certeza que deseja excluir todo o bloco e seus itens?")) {
+    if (window.confirm(t('block.delete_confirm'))) {
       await api.delete(`/blocks/${id}`);
       loadPlanningDetails();
     }
@@ -123,6 +126,8 @@ export function Dashboard() {
           </div>
           
           <div className="flex items-center gap-4">
+            <LanguageSelector />
+            
             <button 
               onClick={toggleTheme}
               className="p-2 rounded-md text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10 transition-colors"
@@ -131,14 +136,14 @@ export function Dashboard() {
             </button>
             <div className="h-5 w-px bg-gray-200 dark:bg-gray-700 hidden sm:block"></div>
             <span className="text-gray-500 dark:text-gray-400 text-sm hidden sm:block">
-              Olá, <strong className="text-gray-900 dark:text-white font-semibold">{user?.name?.split(' ')[0]}</strong>
+              {t('dashboard.welcome')}, <strong className="text-gray-900 dark:text-white font-semibold">{user?.name?.split(' ')[0]}</strong>
             </span>
             <button 
               onClick={signOut}
               className="flex items-center gap-2 text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors rounded-md px-2 py-1 hover:bg-red-50 dark:hover:bg-red-500/10"
             >
               <LogOut size={16} />
-              <span className="text-sm font-medium hidden sm:block">Sair</span>
+              <span className="text-sm font-medium hidden sm:block">{t('dashboard.logout')}</span>
             </button>
           </div>
         </div>
@@ -158,15 +163,14 @@ export function Dashboard() {
                   <DollarSign className="text-accent w-4 h-4" />
                 </div>
                 <div>
-                  <h2 className="text-md font-bold text-gray-900 dark:text-white">Meus Blocos</h2>
-                  <p className="text-xs text-gray-500">Organize suas entradas e saídas</p>
+                  <h2 className="text-md font-bold text-gray-900 dark:text-white">{t('dashboard.balance')}</h2>
                 </div>
               </div>
               <button 
                 onClick={() => setIsBlockModalOpen(true)}
                 className="bg-accent hover:bg-accent-hover text-white px-4 py-2 rounded-md text-sm font-medium transition-all shadow-sm shadow-accent/20 flex items-center gap-2"
               >
-                <Plus size={16} /> <span className="hidden sm:block">Novo Bloco</span>
+                <Plus size={16} /> <span className="hidden sm:block">{t('dashboard.new_block')}</span>
               </button>
             </div>
 
@@ -175,8 +179,8 @@ export function Dashboard() {
               {(!currentPlanning?.blocks || currentPlanning.blocks.length === 0) && (
                 <div className="col-span-full flex flex-col items-center justify-center py-16 text-gray-400 dark:text-gray-500 bg-white dark:bg-secondary-dark/20 rounded-md border border-gray-200 dark:border-white/5 border-dashed">
                   <DollarSign size={40} className="mb-3 opacity-20" />
-                  <p className="text-sm">Nenhum bloco financeiro criado.</p>
-                  <button onClick={() => setIsBlockModalOpen(true)} className="text-accent text-sm mt-2 hover:underline">Criar primeiro bloco</button>
+                  <p className="text-sm">{t('dashboard.no_blocks')}</p>
+                  <button onClick={() => setIsBlockModalOpen(true)} className="text-accent text-sm mt-2 hover:underline">{t('dashboard.new_block')}</button>
                 </div>
               )}
 
@@ -191,13 +195,11 @@ export function Dashboard() {
                       </div>
                       <div>
                         <h3 className="font-bold text-sm text-gray-900 dark:text-white leading-tight">{block.title}</h3>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">{block.type}</span>
                       </div>
                     </div>
                     <button 
                       onClick={() => handleDeleteBlock(block.id)} 
                       className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-md transition-colors opacity-0 group-hover/card:opacity-100"
-                      title="Excluir bloco"
                     >
                       <Trash2 size={14} />
                     </button>
@@ -206,7 +208,7 @@ export function Dashboard() {
                   {/* Lista de Itens */}
                   <div className="p-4 flex-1 flex flex-col gap-2 max-h-[250px] overflow-y-auto">
                     {(!block.items || block.items.length === 0) ? (
-                      <p className="text-gray-400 dark:text-gray-600 text-xs text-center py-4">Nenhum item adicionado.</p>
+                      <p className="text-gray-400 dark:text-gray-600 text-xs text-center py-4"></p>
                     ) : (
                       block.items.map(item => (
                         <div key={item.id} className="flex items-center justify-between group p-1.5 -mx-1.5 rounded-md hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
@@ -238,7 +240,7 @@ export function Dashboard() {
                       onClick={() => handleOpenItemModalForBlock(block.id)}
                       className="w-full py-2 flex items-center justify-center gap-2 text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-accent dark:hover:text-accent border border-dashed border-gray-200 dark:border-white/10 hover:border-accent/50 dark:hover:border-accent/50 rounded-md transition-colors"
                     >
-                      <Plus size={14} /> Adicionar Item
+                      <Plus size={14} /> {t('block.add_item')}
                     </button>
                   </div>
 
@@ -263,16 +265,16 @@ export function Dashboard() {
             
             {/* Widget Resumo */}
             <div className="bg-white dark:bg-secondary-dark/30 border border-gray-200 dark:border-white/5 p-5 rounded-md shadow-sm">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4">Resumo do Mês</h3>
+              <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4">{t('dashboard.summary')}</h3>
               <div className="flex flex-col gap-3">
                 <div className="flex justify-between items-center p-3 rounded-md bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                  <span className="text-xs font-semibold uppercase tracking-wider">Entradas</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider">{t('dashboard.revenue')}</span>
                   <span className="font-bold text-sm">
                     R$ {currentPlanning?.blocks?.filter(b => b.type === 'receita').reduce((sum, b) => sum + calculateTotal(b.items), 0).toLocaleString('pt-BR', {minimumFractionDigits: 2}) || '0,00'}
                   </span>
                 </div>
                 <div className="flex justify-between items-center p-3 rounded-md bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400">
-                  <span className="text-xs font-semibold uppercase tracking-wider">Saídas</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider">{t('dashboard.expense')}</span>
                   <span className="font-bold text-sm">
                     R$ {currentPlanning?.blocks?.filter(b => b.type === 'despesa').reduce((sum, b) => sum + calculateTotal(b.items), 0).toLocaleString('pt-BR', {minimumFractionDigits: 2}) || '0,00'}
                   </span>

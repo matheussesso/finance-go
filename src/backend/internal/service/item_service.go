@@ -21,7 +21,7 @@ func NewItemService(itemRepo domain.ItemRepository, blockRepo domain.BlockReposi
 
 func (s *ItemService) CreateItem(userID uint, blockID uint, description string, amount float64, isPaid bool, dueDate *time.Time) (*domain.Item, error) {
 	if description == "" || amount < 0 {
-		return nil, errors.New("descrição inválida ou valor negativo")
+		return nil, errors.New("item_invalid_desc_amount")
 	}
 
 	// 1. Validação de Segurança: O bloco pertence a este usuário?
@@ -30,7 +30,7 @@ func (s *ItemService) CreateItem(userID uint, blockID uint, description string, 
 		return nil, err
 	}
 	if block == nil {
-		return nil, errors.New("bloco não encontrado ou acesso negado")
+		return nil, errors.New("block_not_found")
 	}
 
 	item := &domain.Item{
@@ -42,7 +42,7 @@ func (s *ItemService) CreateItem(userID uint, blockID uint, description string, 
 	}
 
 	if err := s.itemRepo.Create(item); err != nil {
-		return nil, errors.New("falha ao adicionar item")
+		return nil, errors.New("item_create_error")
 	}
 
 	return item, nil
@@ -52,7 +52,7 @@ func (s *ItemService) DeleteItem(userID uint, itemID uint, blockID uint) error {
 	// 1. Segurança cruzada: o bloco pertence ao usuário?
 	block, err := s.blockRepo.FindByID(blockID, userID)
 	if err != nil || block == nil {
-		return errors.New("bloco inválido ou negado")
+		return errors.New("block_not_found")
 	}
 
 	// 2. Apaga o item

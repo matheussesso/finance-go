@@ -33,14 +33,14 @@ func (s *UserService) Register(name, email, password string) (*domain.User, erro
 		return nil, err
 	}
 	if existingUser != nil {
-		return nil, errors.New("e-mail já cadastrado") // "Exception" controlada
+		return nil, errors.New("email_exists") // "Exception" controlada
 	}
 
 	// 2. Regra de Negócio: Senhas não podem ser salvas em texto limpo.
 	// O bcrypt.GenerateFromPassword faz o papel do Hash::make($password) do Laravel.
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		return nil, errors.New("falha ao processar a senha")
+		return nil, errors.New("process_password_error")
 	}
 
 	// 3. Monta a entidade
@@ -52,7 +52,7 @@ func (s *UserService) Register(name, email, password string) (*domain.User, erro
 
 	// 4. Salva no banco através do repositório
 	if err := s.repo.Create(user); err != nil {
-		return nil, errors.New("falha ao criar usuário")
+		return nil, errors.New("user_create_error")
 	}
 
 	return user, nil
@@ -69,13 +69,13 @@ func (s *UserService) Login(email, password string) (string, *domain.User, error
 	
 	// Se o user for nil, significa que a query não encontrou nada.
 	if user == nil {
-		return "", nil, errors.New("credenciais inválidas")
+		return "", nil, errors.New("invalid_credentials")
 	}
 
 	// 2. Compara a senha informada com o Hash do banco (Auth::attempt no Laravel)
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
 	if err != nil {
-		return "", nil, errors.New("credenciais inválidas")
+		return "", nil, errors.New("invalid_credentials")
 	}
 
 	// 3. Gera o Token JWT contendo o ID do usuário como "claim" (carga útil)
@@ -92,7 +92,7 @@ func (s *UserService) Login(email, password string) (string, *domain.User, error
 
 	tokenString, err := token.SignedString([]byte(secret))
 	if err != nil {
-		return "", nil, errors.New("erro ao gerar token de autenticação")
+		return "", nil, errors.New("token_generate_error")
 	}
 
 	return tokenString, user, nil

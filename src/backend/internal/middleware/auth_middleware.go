@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"backend/pkg/response"
+	"backend/pkg/i18n"
 	"context"
 	"fmt"
 	"net/http"
@@ -18,14 +19,14 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		// 1. Pega o header de Autorização ("Authorization: Bearer <token>")
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
-			response.Error(w, http.StatusUnauthorized, "Token de autenticação ausente")
+			response.Error(w, http.StatusUnauthorized, i18n.T(r.Context(), "missing_token"))
 			return
 		}
 
 		// 2. Remove o prefixo "Bearer "
 		parts := strings.Split(authHeader, " ")
 		if len(parts) != 2 || parts[0] != "Bearer" {
-			response.Error(w, http.StatusUnauthorized, "Formato de token inválido")
+			response.Error(w, http.StatusUnauthorized, i18n.T(r.Context(), "invalid_token_format"))
 			return
 		}
 		tokenString := parts[1]
@@ -44,14 +45,14 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		})
 
 		if err != nil || !token.Valid {
-			response.Error(w, http.StatusUnauthorized, "Token inválido ou expirado")
+			response.Error(w, http.StatusUnauthorized, i18n.T(r.Context(), "invalid_token"))
 			return
 		}
 
 		// 4. Extrai os dados (claims) que colocamos dentro do token lá no Login
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if !ok {
-			response.Error(w, http.StatusUnauthorized, "Erro ao ler payload do token")
+			response.Error(w, http.StatusUnauthorized, i18n.T(r.Context(), "read_token_error"))
 			return
 		}
 

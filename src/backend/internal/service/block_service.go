@@ -16,7 +16,7 @@ func NewBlockService(repo domain.BlockRepository) *BlockService {
 
 func (s *BlockService) CreateBlock(userID uint, planningID uint, title string, blockType string) (*domain.Block, error) {
 	if title == "" || blockType == "" {
-		return nil, errors.New("título e tipo são obrigatórios")
+		return nil, errors.New("block_title_type_required")
 	}
 
 	block := &domain.Block{
@@ -27,7 +27,7 @@ func (s *BlockService) CreateBlock(userID uint, planningID uint, title string, b
 	}
 
 	if err := s.repo.Create(block); err != nil {
-		return nil, errors.New("erro ao criar bloco de finanças")
+		return nil, errors.New("block_create_error")
 	}
 
 	return block, nil
@@ -44,7 +44,7 @@ func (s *BlockService) DeleteBlock(id uint, userID uint) error {
 		return err
 	}
 	if block == nil {
-		return errors.New("bloco não encontrado ou acesso negado")
+		return errors.New("block_not_found")
 	}
 
 	// 2. Apaga o bloco

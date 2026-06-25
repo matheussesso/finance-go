@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function CalendarView({ currentPlanning, onCreateItemClick }) {
+  const { t, i18n } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export function CalendarView({ currentPlanning, onCreateItemClick }) {
     <div className="bg-white dark:bg-secondary-dark/30 border border-gray-200 dark:border-white/5 rounded-md overflow-hidden shadow-sm">
       <div className="p-4 border-b border-gray-100 dark:border-white/5 flex items-center justify-between">
         <h2 className="text-md font-bold text-gray-900 dark:text-white capitalize">
-          {currentDate.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}
+          {currentDate.toLocaleDateString(i18n.language, { month: 'long', year: 'numeric' })}
         </h2>
         <div className="flex gap-1">
           <button onClick={prevMonth} className="p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 transition-colors">
@@ -56,7 +58,7 @@ export function CalendarView({ currentPlanning, onCreateItemClick }) {
       </div>
 
       <div className="grid grid-cols-7 text-center border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-[#141416]/50">
-        {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map(d => (
+        {[t('calendar.days.Sun'), t('calendar.days.Mon'), t('calendar.days.Tue'), t('calendar.days.Wed'), t('calendar.days.Thu'), t('calendar.days.Fri'), t('calendar.days.Sat')].map(d => (
           <div key={d} className="py-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">{d}</div>
         ))}
       </div>
@@ -83,14 +85,14 @@ export function CalendarView({ currentPlanning, onCreateItemClick }) {
               {itemsByDay[day]?.map((item, idx) => (
                 <div 
                   key={idx} 
-                  title={`${item.description} - R$ ${item.amount}`}
+                  title={`${item.description} - $ ${item.amount}`}
                   className={`text-[8px] leading-tight px-1 py-0.5 rounded-[4px] truncate font-medium ${
                     item.blockType === 'receita' 
                     ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300' 
                     : 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300'
                   }`}
                 >
-                  R$ {item.amount}
+                  $ {item.amount}
                 </div>
               ))}
             </div>

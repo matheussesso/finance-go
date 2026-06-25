@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { ChevronDown, Plus } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function PlanningSelector({ currentPlanning, setCurrentPlanning, plannings, setPlannings }) {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export function PlanningSelector({ currentPlanning, setCurrentPlanning, planning
   }
 
   async function handleCreateNew() {
-    const title = prompt("Nome do novo planejamento (ex: Férias 2026):");
+    const title = prompt(t('planning.prompt_name'));
     if (!title) return;
     
     try {
@@ -37,7 +39,7 @@ export function PlanningSelector({ currentPlanning, setCurrentPlanning, planning
       setCurrentPlanning(newPlan);
       setIsOpen(false);
     } catch (err) {
-      alert("Erro ao criar planejamento.");
+      alert(t('errors.generic'));
     }
   }
 
@@ -48,7 +50,7 @@ export function PlanningSelector({ currentPlanning, setCurrentPlanning, planning
         className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 px-4 py-2 rounded-xl transition-colors"
       >
         <span className="font-medium text-gray-900 dark:text-white text-sm">
-          {currentPlanning ? currentPlanning.title : 'Carregando...'}
+          {currentPlanning ? currentPlanning.title : t('dashboard.loading')}
         </span>
         <ChevronDown size={16} className="text-gray-500" />
       </button>
@@ -75,7 +77,7 @@ export function PlanningSelector({ currentPlanning, setCurrentPlanning, planning
               onClick={handleCreateNew}
               className="w-full flex items-center justify-center gap-2 text-sm font-medium text-accent hover:bg-accent/5 py-2 rounded-lg transition-colors"
             >
-              <Plus size={16} /> Novo Planejamento
+              <Plus size={16} /> {t('planning.create_new')}
             </button>
           </div>
         </div>

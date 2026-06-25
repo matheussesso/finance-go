@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Modal } from './Modal';
+import { useTranslation } from 'react-i18next';
 
 export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultBlockId, blocks = [] }) {
+  const { t } = useTranslation();
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -44,19 +46,19 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Novo Item de Finança">
+    <Modal isOpen={isOpen} onClose={onClose} title={t('modals.new_item_title')}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         
         {(!defaultBlockId && blocks.length > 0) && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Bloco de Destino</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('modals.target_block')}</label>
             <select 
               value={blockId}
               onChange={e => setBlockId(e.target.value)}
               required
               className="w-full bg-gray-50 dark:bg-[#0A0A0B] border border-gray-200 dark:border-white/10 rounded-md px-3 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-accent/50 outline-none cursor-pointer"
             >
-              <option value="" disabled>Selecione um bloco</option>
+              <option value="" disabled>{t('modals.select_block')}</option>
               {blocks.map(b => (
                 <option key={b.id} value={b.id}>{b.title} ({b.type})</option>
               ))}
@@ -65,10 +67,10 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Descrição</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('modals.description')}</label>
           <input 
             type="text" 
-            placeholder="Ex: Conta de Luz, Supermercado..." 
+            placeholder={t('modals.description_placeholder')}
             value={description}
             onChange={e => setDescription(e.target.value)}
             required
@@ -79,7 +81,7 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
 
         <div className="flex gap-4">
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Valor (R$)</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('modals.amount')} (R$)</label>
             <input 
               type="number" 
               step="0.01"
@@ -92,7 +94,7 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
             />
           </div>
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Vencimento (Opcional)</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('modals.due_date')}</label>
             <input 
               type="date" 
               value={dueDate}
@@ -108,14 +110,14 @@ export function ItemFormModal({ isOpen, onClose, onSubmit, defaultDate, defaultB
             onClick={onClose}
             className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 rounded-md transition-colors"
           >
-            Cancelar
+            {t('modals.cancel')}
           </button>
           <button 
             type="submit"
             disabled={!description.trim() || !amount}
             className="px-4 py-2 text-sm font-medium bg-accent hover:bg-accent-hover text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Salvar Item
+            {t('modals.add')}
           </button>
         </div>
       </form>

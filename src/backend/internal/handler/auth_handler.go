@@ -2,6 +2,7 @@ package handler
 
 import (
 	"backend/internal/service"
+	"backend/pkg/i18n"
 	"backend/pkg/response"
 	"encoding/json"
 	"net/http"
@@ -36,20 +37,20 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 	
 	// json.NewDecoder() lê o body da requisição e transforma o JSON em nossa struct Go (req).
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		response.Error(w, http.StatusBadRequest, "Payload inválido")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "invalid_payload"))
 		return // "return" no Go encerra a execução do método imediatamente
 	}
 
 	// Validação super básica (futuramente podemos usar pacotes de validação, igual Validator do PHP)
 	if req.Name == "" || req.Email == "" || req.Password == "" {
-		response.Error(w, http.StatusBadRequest, "Todos os campos são obrigatórios")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "all_fields_required"))
 		return
 	}
 
 	// Repassa o processamento pesado e regras de banco de dados para o SERVICE.
 	user, err := h.userService.Register(req.Name, req.Email, req.Password)
 	if err != nil {
-		response.Error(w, http.StatusBadRequest, err.Error())
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), err.Error()))
 		return
 	}
 
@@ -67,14 +68,14 @@ type LoginRequest struct {
 func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		response.Error(w, http.StatusBadRequest, "Payload inválido")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "invalid_payload"))
 		return
 	}
 
 	// Aciona o serviço para realizar login, comparar hash, gerar token, etc.
 	token, user, err := h.userService.Login(req.Email, req.Password)
 	if err != nil {
-		response.Error(w, http.StatusUnauthorized, err.Error())
+		response.Error(w, http.StatusUnauthorized, i18n.T(r.Context(), err.Error()))
 		return
 	}
 

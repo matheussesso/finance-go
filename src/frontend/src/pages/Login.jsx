@@ -3,8 +3,10 @@ import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { api } from '../services/api';
 import { WalletCards, Moon, Sun } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function Login() {
+  const { t } = useTranslation();
   const { signIn } = useContext(AuthContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -26,7 +28,7 @@ export function Login() {
         await signIn(email, password);
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Ocorreu um erro no servidor.');
+      setError(err.response?.data?.message || t('errors.generic'));
     }
   }
 
@@ -58,7 +60,7 @@ export function Login() {
               Finance<span className="text-accent">Go</span>
             </h1>
             <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm">
-              {isRegistering ? 'Crie sua conta para começar' : 'Acesse suas finanças pessoais'}
+              {isRegistering ? t('login.register_title') : t('login.title')}
             </p>
           </div>
 
@@ -71,32 +73,32 @@ export function Login() {
 
             {isRegistering && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Nome Completo</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">{t('login.name')}</label>
                 <input 
                   type="text" 
                   required
                   value={name}
                   onChange={e => setName(e.target.value)}
                   className="w-full bg-gray-50 dark:bg-[#141416] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:bg-white transition-all"
-                  placeholder="Seu nome"
+                  placeholder={t('login.name_placeholder')}
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">E-mail</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">{t('login.email')}</label>
               <input 
                 type="email" 
                 required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 className="w-full bg-gray-50 dark:bg-[#141416] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:bg-white transition-all"
-                placeholder="seu@email.com"
+                placeholder={t('login.email_placeholder')}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Senha</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">{t('login.password')}</label>
               <input 
                 type="password" 
                 required
@@ -111,7 +113,7 @@ export function Login() {
               type="submit"
               className="w-full bg-accent hover:bg-accent-hover text-white font-medium py-3 rounded-xl transition-all shadow-lg shadow-accent/25 hover:shadow-accent/40 active:scale-[0.98] mt-6"
             >
-              {isRegistering ? 'Criar Conta' : 'Entrar'}
+              {isRegistering ? t('login.register_button') : t('login.button')}
             </button>
           </form>
 
@@ -120,7 +122,7 @@ export function Login() {
               onClick={() => setIsRegistering(!isRegistering)}
               className="text-gray-500 dark:text-gray-400 hover:text-accent dark:hover:text-white text-sm transition-colors font-medium"
             >
-              {isRegistering ? 'Já tem uma conta? Faça login' : 'Ainda não tem conta? Registre-se'}
+              {isRegistering ? t('login.have_account') + ' ' + t('login.login_link') : t('login.no_account') + ' ' + t('login.register')}
             </button>
           </div>
 

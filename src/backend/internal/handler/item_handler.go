@@ -2,6 +2,7 @@ package handler
 
 import (
 	"backend/internal/service"
+	"backend/pkg/i18n"
 	"backend/pkg/response"
 	"encoding/json"
 	"net/http"
@@ -32,13 +33,13 @@ func (h *ItemHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	var req CreateItemRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		response.Error(w, http.StatusBadRequest, "Payload inválido")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "invalid_payload"))
 		return
 	}
 
 	item, err := h.itemService.CreateItem(userID, req.BlockID, req.Description, req.Amount, req.IsPaid, req.DueDate)
 	if err != nil {
-		response.Error(w, http.StatusBadRequest, err.Error())
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), err.Error()))
 		return
 	}
 
@@ -52,9 +53,9 @@ func (h *ItemHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	blockID, _ := strconv.ParseUint(chi.URLParam(r, "block_id"), 10, 32) // assumindo rotas aninhadas ou params query
 
 	if err := h.itemService.DeleteItem(userID, uint(itemID), uint(blockID)); err != nil {
-		response.Error(w, http.StatusBadRequest, err.Error())
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), err.Error()))
 		return
 	}
 
-	response.JSON(w, http.StatusOK, map[string]string{"message": "Item excluído"})
+	response.JSON(w, http.StatusOK, map[string]string{"message": "success"})
 }

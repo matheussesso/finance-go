@@ -1,0 +1,71 @@
+{
+  "translation": {
+    "login": {
+      "title": "Access your account",
+      "subtitle": "And take back control of your finances.",
+      "email": "Email",
+      "email_placeholder": "your@email.com",
+      "password": "Password",
+      "password_placeholder": "Your secret password",
+      "button": "Sign in to FinanceGo",
+      "no_account": "Don't have an account?",
+      "register": "Sign up",
+      "register_title": "Create your account",
+      "name": "Full Name",
+      "name_placeholder": "John Doe",
+      "register_button": "Create Account",
+      "have_account": "Already have an account?",
+      "login_link": "Log in",
+      "loading": "Loading..."
+    },
+    "dashboard": {
+      "welcome": "Welcome",
+      "balance": "Total Balance",
+      "revenue": "Revenues",
+      "expense": "Expenses",
+      "new_block": "New Block",
+      "logout": "Logout",
+      "empty_plannings": "No plans found. Create one to get started!",
+      "loading": "Loading...",
+      "no_blocks": "No blocks created yet.",
+      "summary": "Month Summary"
+    },
+    "planning": {
+      "selector_title": "My Plans",
+      "create_new": "New Plan",
+      "prompt_name": "Name of the new plan (e.g., Vacation 2026):",
+      "delete_confirm": "Are you sure you want to delete the plan"
+    },
+    "block": {
+      "add_item": "New Item",
+      "delete_confirm": "Are you sure you want to delete the block"
+    },
+    "calendar": {
+      "days": {
+        "Sun": "Sun", "Mon": "Mon", "Tue": "Tue", "Wed": "Wed", "Thu": "Thu", "Fri": "Fri", "Sat": "Sat"
+      }
+    },
+    "modals": {
+      "new_block_title": "New Finance Block",
+      "block_name": "Block Name",
+      "block_name_placeholder": "Ex: House Expenses, Salary...",
+      "block_type": "Type",
+      "type_expense": "Expense (Red)",
+      "type_revenue": "Revenue (Green)",
+      "cancel": "Cancel",
+      "create": "Create",
+      "new_item_title": "New Finance Item",
+      "target_block": "Target Block",
+      "select_block": "Select a block",
+      "description": "Description",
+      "description_placeholder": "Ex: Electricity Bill, Groceries...",
+      "amount": "Amount",
+      "due_date": "Due Date (Optional)",
+      "add": "Add"
+    },
+    "errors": {
+      "generic": "An error occurred.",
+      "api_error": "API Error"
+    }
+  }
+}

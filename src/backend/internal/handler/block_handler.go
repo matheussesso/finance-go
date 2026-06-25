@@ -2,6 +2,7 @@ package handler
 
 import (
 	"backend/internal/service"
+	"backend/pkg/i18n"
 	"backend/pkg/response"
 	"encoding/json"
 	"net/http"
@@ -31,18 +32,18 @@ func (h *BlockHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	var req CreateBlockRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		response.Error(w, http.StatusBadRequest, "Payload inválido")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "invalid_payload"))
 		return
 	}
 
 	if req.PlanningID == 0 {
-		response.Error(w, http.StatusBadRequest, "O campo planning_id é obrigatório")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "invalid_payload"))
 		return
 	}
 
 	block, err := h.blockService.CreateBlock(userID, req.PlanningID, req.Title, req.Type)
 	if err != nil {
-		response.Error(w, http.StatusBadRequest, err.Error())
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), err.Error()))
 		return
 	}
 
@@ -55,7 +56,7 @@ func (h *BlockHandler) List(w http.ResponseWriter, r *http.Request) {
 
 	blocks, err := h.blockService.GetUserBlocks(userID)
 	if err != nil {
-		response.Error(w, http.StatusInternalServerError, "Erro ao buscar blocos")
+		response.Error(w, http.StatusInternalServerError, i18n.T(r.Context(), "server_error"))
 		return
 	}
 
@@ -70,14 +71,14 @@ func (h *BlockHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
-		response.Error(w, http.StatusBadRequest, "ID de bloco inválido")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "invalid_id"))
 		return
 	}
 
 	if err := h.blockService.DeleteBlock(uint(id), userID); err != nil {
-		response.Error(w, http.StatusBadRequest, err.Error())
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), err.Error()))
 		return
 	}
 
-	response.JSON(w, http.StatusOK, map[string]string{"message": "Bloco excluído com sucesso"})
+	response.JSON(w, http.StatusOK, map[string]string{"message": "success"})
 }

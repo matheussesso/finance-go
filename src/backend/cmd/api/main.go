@@ -79,6 +79,7 @@ func main() {
 	// ---------------------------------------------------------
 	r.Use(middleware.Logger)    // Loga cada requisição HTTP no terminal
 	r.Use(middleware.Recoverer) // Evita que o servidor crashe se der Panic (fatal error)
+	r.Use(mymiddleware.LanguageMiddleware) // Extrai o idioma do cliente para o Contexto
 
 	// O CORS permite que nosso Frontend no React/Vite (porta 5173 ou 3000) 
 	// faça chamadas para a porta 8080 do Go sem ser bloqueado pelo navegador.

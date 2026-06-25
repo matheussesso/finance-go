@@ -1,0 +1,71 @@
+{
+  "translation": {
+    "login": {
+      "title": "Acesse sua conta",
+      "subtitle": "E retome o controle das suas finanças.",
+      "email": "E-mail",
+      "email_placeholder": "seu@email.com",
+      "password": "Senha",
+      "password_placeholder": "Sua senha secreta",
+      "button": "Entrar no FinanceGo",
+      "no_account": "Ainda não tem conta?",
+      "register": "Registre-se",
+      "register_title": "Crie sua conta",
+      "name": "Nome Completo",
+      "name_placeholder": "João da Silva",
+      "register_button": "Criar Conta",
+      "have_account": "Já tem conta?",
+      "login_link": "Faça Login",
+      "loading": "Carregando..."
+    },
+    "dashboard": {
+      "welcome": "Bem-vindo",
+      "balance": "Saldo Total",
+      "revenue": "Receitas",
+      "expense": "Despesas",
+      "new_block": "Novo Bloco",
+      "logout": "Sair",
+      "empty_plannings": "Nenhum planejamento encontrado. Crie um para começar!",
+      "loading": "Carregando...",
+      "no_blocks": "Nenhum bloco criado ainda.",
+      "summary": "Resumo do Mês"
+    },
+    "planning": {
+      "selector_title": "Meus Planejamentos",
+      "create_new": "Novo Planejamento",
+      "prompt_name": "Nome do novo planejamento (ex: Férias 2026):",
+      "delete_confirm": "Tem certeza que deseja apagar o planejamento"
+    },
+    "block": {
+      "add_item": "Novo Item",
+      "delete_confirm": "Tem certeza que deseja excluir o bloco"
+    },
+    "calendar": {
+      "days": {
+        "Sun": "Dom", "Mon": "Seg", "Tue": "Ter", "Wed": "Qua", "Thu": "Qui", "Fri": "Sex", "Sat": "Sáb"
+      }
+    },
+    "modals": {
+      "new_block_title": "Novo Bloco de Finanças",
+      "block_name": "Nome do Bloco",
+      "block_name_placeholder": "Ex: Despesas de Casa, Salário...",
+      "block_type": "Tipo",
+      "type_expense": "Despesa (Vermelho)",
+      "type_revenue": "Receita (Verde)",
+      "cancel": "Cancelar",
+      "create": "Criar",
+      "new_item_title": "Novo Item de Finança",
+      "target_block": "Bloco de Destino",
+      "select_block": "Selecione um bloco",
+      "description": "Descrição",
+      "description_placeholder": "Ex: Conta de Luz, Supermercado...",
+      "amount": "Valor",
+      "due_date": "Vencimento (Opcional)",
+      "add": "Adicionar"
+    },
+    "errors": {
+      "generic": "Ocorreu um erro.",
+      "api_error": "Erro na API"
+    }
+  }
+}

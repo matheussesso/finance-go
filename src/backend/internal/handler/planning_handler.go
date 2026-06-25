@@ -2,6 +2,7 @@ package handler
 
 import (
 	"backend/internal/service"
+	"backend/pkg/i18n"
 	"backend/pkg/response"
 	"encoding/json"
 	"net/http"
@@ -30,13 +31,13 @@ func (h *PlanningHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	var req CreatePlanningRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		response.Error(w, http.StatusBadRequest, "Payload inválido")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "invalid_payload"))
 		return
 	}
 
 	planning, err := h.service.CreatePlanning(userID, req.Title, req.Month, req.Year)
 	if err != nil {
-		response.Error(w, http.StatusBadRequest, err.Error())
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), err.Error()))
 		return
 	}
 
@@ -48,7 +49,7 @@ func (h *PlanningHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 
 	plannings, err := h.service.GetAllPlannings(userID)
 	if err != nil {
-		response.Error(w, http.StatusInternalServerError, err.Error())
+		response.Error(w, http.StatusInternalServerError, i18n.T(r.Context(), err.Error()))
 		return
 	}
 
@@ -60,13 +61,13 @@ func (h *PlanningHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
-		response.Error(w, http.StatusBadRequest, "ID inválido")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "invalid_id"))
 		return
 	}
 
 	planning, err := h.service.GetPlanningByID(uint(id), userID)
 	if err != nil {
-		response.Error(w, http.StatusNotFound, err.Error())
+		response.Error(w, http.StatusNotFound, i18n.T(r.Context(), err.Error()))
 		return
 	}
 
@@ -78,13 +79,13 @@ func (h *PlanningHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	idStr := chi.URLParam(r, "id")
 	id, err := strconv.ParseUint(idStr, 10, 32)
 	if err != nil {
-		response.Error(w, http.StatusBadRequest, "ID inválido")
+		response.Error(w, http.StatusBadRequest, i18n.T(r.Context(), "invalid_id"))
 		return
 	}
 
 	err = h.service.DeletePlanning(uint(id), userID)
 	if err != nil {
-		response.Error(w, http.StatusInternalServerError, err.Error())
+		response.Error(w, http.StatusInternalServerError, i18n.T(r.Context(), err.Error()))
 		return
 	}
 
