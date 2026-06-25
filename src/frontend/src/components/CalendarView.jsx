@@ -84,7 +84,7 @@ export function CalendarView({ currentPlanning, onCreateItemClick }) {
         ))}
       </div>
 
-      <div className="grid grid-cols-7 auto-rows-[70px]">
+      <div className="grid grid-cols-7 auto-rows-[55px] sm:auto-rows-[70px]">
         {blanks.map(b => (
           <div key={`blank-${b}`} className="border-r border-b border-gray-100 dark:border-white/5 bg-gray-50/30 dark:bg-transparent"></div>
         ))}

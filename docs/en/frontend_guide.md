@@ -26,9 +26,12 @@ All styling uses utility classes within the JSX itself. The design focus:
 - Semantic and clean use of Tailwind (`rounded-md`, `border-gray-200`, `shadow-sm`).
 - **Dark Mode**: Every component in the platform supports the `dark:` prefix.
 - Dynamic colors injected directly into the class based on logic (e.g., `bg-emerald-100` vs `bg-rose-100`).
+- **Styling:** We use TailwindCSS. The design must be modern and premium, supporting `dark` mode.
+- **Responsiveness:** All components must be built mobile-first using Tailwind's responsive prefixes (`sm:`, `md:`, `lg:`). Flexible grids and stacking layouts must be used to ensure the application works on all device sizes.
 
 ## State Management
 For this application, finances do not require (initially) robust management libraries like Redux:
+- **State Management:** Simple Context API for Authentication and Theme.
 - Heavy use of `useState` and `useEffect` to load the base list of the active Planning (Plannings and their corresponding Blocks).
 - Use of **Context API (`AuthContext`)** to check the user's session and store the JWT Token across all screens.
 - Requests made via the service layer reload the UI and reactively close modals.

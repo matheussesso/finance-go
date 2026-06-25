@@ -68,7 +68,7 @@ export function Login() {
       </div>
 
       <div className="w-full max-w-md z-10 relative">
-        <div className="bg-white/80 dark:bg-secondary-dark/40 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-3xl p-8 shadow-xl dark:shadow-2xl transition-colors duration-300">
+        <div className="bg-white/80 dark:bg-secondary-dark/40 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-3xl p-6 sm:p-8 shadow-xl dark:shadow-2xl transition-colors duration-300">
           
           <div className="flex flex-col items-center mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-accent to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-accent/30 mb-4 transform transition hover:scale-105">

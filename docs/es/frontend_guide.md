@@ -22,8 +22,9 @@ Para mantener el diseño escalable, el proyecto usa:
 - `/src/services`: Funciones de `axios` con interceptores centralizados (inyectando el token JWT Bearer y manejando las solicitudes a la API).
 
 ## Estilización (TailwindCSS)
-Toda la estilización usa clases utilitarias en el propio JSX. El enfoque del diseño:
-- Uso semántico y limpio de Tailwind (`rounded-md`, `border-gray-200`, `shadow-sm`).
+- **Estilización:** Usamos TailwindCSS. El diseño debe ser moderno y premium, soportando el modo `dark`.
+- **Responsividad:** Todos los componentes deben ser construidos "mobile-first" usando los prefijos responsivos de Tailwind (`sm:`, `md:`, `lg:`). Se deben usar grids flexibles y diseños apilables para garantizar que la aplicación funcione en todos los tamaños de pantalla.
+- **Manejo de Estado:** Context API simple para Autenticación y Tema.
 - **Dark Mode**: Cada componente de la plataforma soporta el prefijo `dark:`.
 - Colores dinámicos inyectados directamente en la clase según la lógica (ej: `bg-emerald-100` vs `bg-rose-100`).
 

@@ -26,6 +26,7 @@ This file defines the strict workspace rules, architecture standards, and best p
 - **Stack:** Vite + React + TailwindCSS v3.
 - **State Management:** React Context API (`AuthContext`, `ThemeContext`).
 - **Styling:** Tailwind exclusively. Keep it clean, modern, and premium. Support `dark` mode via class strategy. Use subtle gradients, micro-animations, and glassmorphism.
+- **Responsiveness:** All components must be built mobile-first using Tailwind's responsive prefixes (`sm:`, `md:`, `lg:`). Avoid fixed sizes that break on small screens. Use flexible grids and stacking layouts (`flex-col sm:flex-row`).
 - **Layout & Forms:** Unified Dashboard. Modals (`Modal.jsx`) used for data entry instead of static inline forms.
 - **Routing:** `react-router-dom` with explicit `PrivateRoute` wrappers.
 - **API Consumption:** `axios` configured centrally at `src/services/api.js` with Request Interceptors injecting JWT token and `Accept-Language` header from `localStorage`.

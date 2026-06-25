@@ -24,6 +24,7 @@ Para manter o design escalável, o projeto usa:
 ## Estilização (TailwindCSS)
 Toda a estilização utiliza classes utilitárias no próprio JSX. O foco do design:
 - Uso do Tailwind de forma semântica e limpa (`rounded-md`, `border-gray-200`, `shadow-sm`).
+- **Responsividade:** Todos os componentes devem ser construídos "mobile-first" usando os prefixos responsivos do Tailwind (`sm:`, `md:`, `lg:`). Grids flexíveis e layouts empilháveis devem ser usados para garantir que a aplicação funcione em todos os tamanhos de tela.
 - **Dark Mode**: Todo componente da plataforma possui suporte para o prefixo `dark:`.
 - Cores dinâmicas injetadas diretamente na classe de acordo com lógicas (ex: `bg-emerald-100` vs `bg-rose-100`).
 

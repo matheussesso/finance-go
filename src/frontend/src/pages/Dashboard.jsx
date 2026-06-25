@@ -8,7 +8,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { api } from '../services/api';
-import { LogOut, Plus, Trash2, Circle, Sun, Moon, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+import { LogOut, Plus, Trash2, Circle, Sun, Moon, TrendingUp, TrendingDown, DollarSign, Menu } from 'lucide-react';
 import { PlanningSelector } from '../components/PlanningSelector';
 import { CalendarView } from '../components/CalendarView';
 import { BlockFormModal } from '../components/BlockFormModal';
@@ -164,9 +164,15 @@ export function Dashboard() {
       
       {/* Premium Header */}
       <header className="border-b border-gray-200 dark:border-white/5 bg-white/80 dark:bg-[#22272e]/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 min-h-[4rem] py-2 sm:py-0 flex flex-wrap items-center justify-between gap-y-2">
+          <div className="flex items-center gap-4 sm:gap-6">
             <div className="flex items-center gap-3">
+              <button 
+                className="p-1.5 -ml-1.5 rounded-md text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10 transition-colors"
+                title={t('dashboard.menu') || 'Menu'}
+              >
+                <Menu size={20} />
+              </button>
               <div className="w-8 h-8 bg-accent rounded-md flex items-center justify-center shadow-md shadow-accent/20">
                 <DollarSign className="text-white w-4 h-4" />
               </div>
@@ -207,7 +213,7 @@ export function Dashboard() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 mt-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 mt-6 sm:mt-8">
         
         {/* Dashboard Layout (Calendar on Right, Blocks on Left) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -243,7 +249,7 @@ export function Dashboard() {
               )}
 
               {currentPlanning?.blocks?.map(block => (
-                <div key={block.id} className="bg-white dark:bg-[#2d333b] border border-gray-200 dark:border-white/5 rounded-md overflow-hidden hover:border-accent/30 dark:hover:border-white/10 shadow-sm transition-all flex flex-col group/card relative">
+                <div key={block.id} className="bg-white dark:bg-secondary-dark/30 border border-gray-200 dark:border-white/5 rounded-md overflow-hidden hover:border-accent/30 dark:hover:border-white/10 shadow-sm transition-all flex flex-col group/card relative">
                   
                   {/* Block Header */}
                   <div className="p-4 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5 flex justify-between items-center group">
@@ -293,7 +299,7 @@ export function Dashboard() {
                   </div>
 
                   {/* Quick Add Button */}
-                  <div className="px-4 pb-3 pt-1 bg-white dark:bg-[#2d333b]">
+                  <div className="px-4 pb-3 pt-1 bg-white dark:bg-transparent">
                     <button 
                       onClick={() => handleOpenItemModalForBlock(block.id)}
                       className="w-full py-2 flex items-center justify-center gap-2 text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-accent dark:hover:text-accent border border-dashed border-gray-200 dark:border-white/10 hover:border-accent/50 dark:hover:border-accent/50 rounded-md transition-colors"
