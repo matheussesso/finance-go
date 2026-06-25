@@ -1,2 +1,38 @@
+# Environment variables
 .env
+.env.*
+
+# Go cache and binaries
+*.exe
+*.test
+*.out
+*.o
+*.bin
+
+# Large data/media files (keep folders, ignore content)
+data/
+media/
+user_uploads/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+
+# Build outputs
+/dist/
+/build/
+/out/
+
+# Temporary files
+*.tmp
+*.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Docker
+docker-compose.override.yml
+
+# Agents directory
 .agents/
