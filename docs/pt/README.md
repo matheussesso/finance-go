@@ -75,10 +75,10 @@ Pronto! Com apenas um comando, tudo está no ar. Abra no seu navegador a URL do 
 
 Se você é desenvolvedor e deseja entender melhor a arquitetura ou o banco de dados, explore os arquivos da pasta `/docs`:
 - [Guia Rápido: Go para Devs PHP (Laravel/Codeigniter)](docs/pt/go_for_php_developers.md)
-- [Arquitetura do Sistema e Docker](docs/pt/architecture.md)
-- [Documentação de Endpoints da API](docs/pt/api_endpoints.md)
-- [Diagrama e Schema do Banco de Dados](docs/pt/database_schema.md)
-- [Guia do Frontend](docs/pt/frontend_guide.md)
+- [Arquitetura do Sistema e Docker](architecture.md)
+- [Documentação de Endpoints da API](api_endpoints.md)
+- [Diagrama e Schema do Banco de Dados](database_schema.md)
+- [Guia do Frontend](frontend_guide.md)
 
 ---
 

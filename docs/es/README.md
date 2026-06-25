@@ -74,11 +74,11 @@ docker compose up -d --build
 ## 📖 Documentación Adicional (Dev)
 
 Si eres desarrollador y deseas entender mejor la arquitectura o la base de datos, explora los archivos de la carpeta `/docs`:
-- [Guía Rápida: Go para Devs PHP (Laravel/Codeigniter)](docs/es/go_for_php_developers.md)
-- [Arquitectura del Sistema y Docker](docs/es/architecture.md)
-- [Documentación de Endpoints de la API](docs/es/api_endpoints.md)
-- [Diagrama y Esquema de la Base de Datos](docs/es/database_schema.md)
-- [Guía del Frontend](docs/es/frontend_guide.md)
+- [Guía Rápida: Go para Devs PHP (Laravel/Codeigniter)](go_for_php_developers.md)
+- [Arquitectura del Sistema y Docker](architecture.md)
+- [Documentación de Endpoints de la API](api_endpoints.md)
+- [Diagrama y Esquema de la Base de Datos](database_schema.md)
+- [Guía del Frontend](frontend_guide.md)
 
 ---
 
