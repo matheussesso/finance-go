@@ -3,11 +3,11 @@ FROM golang:alpine AS builder
 WORKDIR /app
 
 # Instala dependências antes de copiar o código inteiro (cache layer)
-COPY go.mod go.sum ./
+COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 
-# Copia todo o código e compila o binário otimizado para produção
-COPY . .
+# Copia todo o código do backend e compila o binário otimizado para produção
+COPY backend/ .
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o api ./cmd/api/main.go
 
 # Production stage (Imagem minúscula, sem código fonte, apenas o binário)

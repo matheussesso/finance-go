@@ -17,7 +17,7 @@ services:
 
   api:
     build:
-      context: ./backend
+      context: .
       dockerfile: Dockerfile
     container_name: api-go-backend
     ports:
